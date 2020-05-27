@@ -4,9 +4,15 @@
       <p class="text-gray-700 text-sm h-24">
         {{ nodeTree.text }}
       </p>
-      <div class="flex content-between w-32">
+      <div
+        v-if="nodeTree.type === 'Question'"
+        class="flex content-between w-32"
+      >
         <div class="flex-1 text-sm text-gray-500">YES</div>
         <div class="flex-1 text-sm text-gray-500">NO</div>
+      </div>
+      <div v-else class="cursor-pointer" @click="handlePlusClicked">
+        <span>+</span>
       </div>
     </div>
     <div v-if="nodeTree.type === 'Question'" class="nodes table relative">
@@ -42,7 +48,19 @@ export default Vue.extend({
       required: true
     }
   },
-  methods: {}
+  methods: {
+    handlePlusClicked() {
+      this.nodeTree.type = 'Question'
+      this.$set(this.nodeTree, 'yes', {
+        type: 'Result',
+        text: 'result_default'
+      })
+      this.$set(this.nodeTree, 'no', {
+        type: 'Result',
+        text: 'result_default'
+      })
+    }
+  }
 })
 </script>
 
