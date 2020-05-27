@@ -5,7 +5,7 @@
         {{ nodeTree.text }}
       </p>
       <div
-        v-if="nodeTree.type === 'Question'"
+        v-if="nodeTree.type === 'QUESTION'"
         class="flex content-between w-32"
       >
         <div class="flex-1 text-sm text-gray-500">YES</div>
@@ -15,7 +15,7 @@
         <span>+</span>
       </div>
     </div>
-    <div v-if="nodeTree.type === 'Question'" class="nodes table relative">
+    <div v-if="nodeTree.type === 'QUESTION'" class="nodes table relative">
       <div class="node-wrapper table-cell relative">
         <QuestionNode :node-tree="nodeTree.yes" class="node relative" />
       </div>
@@ -29,13 +29,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 import QuestionNode from '~/components/QuestionNode'
-
-export type NodeTree = {
-  text: string
-  yes?: NodeTree
-  no?: NodeTree
-  type: String
-}
+import { NodeTree } from '~/types/struct'
 
 export default Vue.extend({
   name: 'QuestionNode',
@@ -50,13 +44,13 @@ export default Vue.extend({
   },
   methods: {
     handlePlusClicked() {
-      this.nodeTree.type = 'Question'
+      this.nodeTree.type = 'QUESTION'
       this.$set(this.nodeTree, 'yes', {
-        type: 'Result',
+        type: 'RESULT',
         text: 'result_default'
       })
       this.$set(this.nodeTree, 'no', {
-        type: 'Result',
+        type: 'RESULT',
         text: 'result_default'
       })
     }

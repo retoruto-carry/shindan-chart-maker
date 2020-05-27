@@ -8,43 +8,37 @@
 <script lang="ts">
 import Vue from 'vue'
 import QuestionNode from '~/components/QuestionNode'
-
-export type NodeTree = {
-  text: string
-  yes?: NodeTree
-  no?: NodeTree
-  type: String
-}
+import { NodeTree } from '~/types/struct'
 
 type LocalData = {
   nodeTree: NodeTree
 }
 
 const nodeTreeData: NodeTree = {
-  type: 'Question',
+  type: 'QUESTION',
   text: 'a?',
   yes: {
-    type: 'Question',
+    type: 'QUESTION',
     text: 'b?',
     yes: {
-      type: 'Result',
+      type: 'RESULT',
       text: 'result_a'
     },
     no: {
-      type: 'Question',
+      type: 'QUESTION',
       text: 'b?',
       yes: {
-        type: 'Result',
+        type: 'RESULT',
         text: 'result_v'
       },
       no: {
-        type: 'Result',
+        type: 'RESULT',
         text: 'result_x'
       }
     }
   },
   no: {
-    type: 'Result',
+    type: 'RESULT',
     text: 'result_hoge'
   }
 }

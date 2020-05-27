@@ -2,7 +2,7 @@
   <div>
     <h1>Title</h1>
     <p>{{ currentNodeTree.text }}</p>
-    <template v-if="currentNodeTree.type === 'Question'">
+    <template v-if="currentNodeTree.type === 'QUESTION'">
       <button @click="handleYesClicked">yes</button>
       <button @click="handleNoClicked">no</button>
     </template>
@@ -16,13 +16,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-
-export type NodeTree = {
-  text: string
-  yes?: NodeTree
-  no?: NodeTree
-  type: String
-}
+import { NodeTree } from '~/types/struct'
 
 type LocalData = {
   nodeTree: NodeTree
@@ -30,22 +24,22 @@ type LocalData = {
 }
 
 const nodeTreeData: NodeTree = {
-  type: 'Question',
+  type: 'QUESTION',
   text: 'a?',
   yes: {
-    type: 'Question',
+    type: 'QUESTION',
     text: 'b?',
     yes: {
-      type: 'Result',
+      type: 'RESULT',
       text: 'result_a'
     },
     no: {
-      type: 'Result',
+      type: 'RESULT',
       text: 'result_b'
     }
   },
   no: {
-    type: 'Result',
+    type: 'RESULT',
     text: 'result_c'
   }
 }
