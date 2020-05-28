@@ -25,31 +25,23 @@ type LocalData = {
 
 const nodeTreeData: NodeTree = {
   type: 'QUESTION',
-  text: 'a?',
-  yes: {
-    type: 'QUESTION',
-    text: 'b?',
-    yes: {
-      type: 'RESULT',
-      text: 'result_a'
+  text: '',
+  choiceNodes: [
+    {
+      label: '',
+      nodeTree: {
+        type: 'RESULT',
+        text: 'result_a'
+      }
     },
-    no: {
-      type: 'QUESTION',
-      text: 'b?',
-      yes: {
+    {
+      label: '',
+      nodeTree: {
         type: 'RESULT',
-        text: 'result_v'
-      },
-      no: {
-        type: 'RESULT',
-        text: 'result_x'
+        text: 'result_b'
       }
     }
-  },
-  no: {
-    type: 'RESULT',
-    text: 'result_hoge'
-  }
+  ]
 }
 
 export default Vue.extend({

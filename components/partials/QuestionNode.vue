@@ -21,8 +21,22 @@
         placeholder="テキストを入力"
       />
       <div v-if="nodeTree.type === 'QUESTION'" class="flex content-between">
-        <div class="flex-1 text-sm text-red-600">YES</div>
-        <div class="flex-1 text-sm text-gray-600">NO</div>
+        <div class="flex-1">
+          <input
+            v-model="nodeTree.choiceNodes[0].label"
+            class="border w-full text-gray-700 text-center text-sm"
+            type="text"
+            placeholder="選択肢１"
+          />
+        </div>
+        <div class="flex-1">
+          <input
+            v-model="nodeTree.choiceNodes[1].label"
+            class="border w-full text-gray-700 text-center text-sm"
+            type="text"
+            placeholder="選択肢２"
+          />
+        </div>
       </div>
       <div v-else class="cursor-pointer" @click="handlePlusClicked">
         <p class="text-xs text-gray-600">+ 分岐を追加</p>
@@ -30,10 +44,16 @@
     </div>
     <div v-if="nodeTree.type === 'QUESTION'" class="nodes table relative">
       <div class="node-wrapper table-cell relative">
-        <QuestionNode :node-tree="nodeTree.yes" class="node relative" />
+        <QuestionNode
+          :node-tree="nodeTree.choiceNodes[0]"
+          class="node relative"
+        />
       </div>
       <div class="node-wrapper table-cell relative">
-        <QuestionNode :node-tree="nodeTree.no" class="node relative" />
+        <QuestionNode
+          :node-tree="nodeTree.choiceNodes[1]"
+          class="node relative"
+        />
       </div>
     </div>
   </div>
@@ -58,19 +78,26 @@ export default Vue.extend({
   methods: {
     handlePlusClicked() {
       this.nodeTree.type = 'QUESTION'
-      this.$set(this.nodeTree, 'yes', {
-        type: 'RESULT',
-        text: 'result_default'
-      })
-      this.$set(this.nodeTree, 'no', {
-        type: 'RESULT',
-        text: 'result_default'
-      })
+      this.$set(this.nodeTree, 'choiceNodes', [
+        {
+          label: '',
+          nodeTree: {
+            type: 'RESULT',
+            text: ''
+          }
+        },
+        {
+          label: '',
+          nodeTree: {
+            type: 'RESULT',
+            text: ''
+          }
+        }
+      ])
     },
     handleDeleteClicked() {
-      this.$delete(this.nodeTree, 'no')
-      this.$delete(this.nodeTree, 'yes')
       this.nodeTree.type = 'RESULT'
+      this.$delete(this.nodeTree, 'choiceNodes')
     },
     displayType(type: NodeType): string {
       if (type === 'QUESTION') {

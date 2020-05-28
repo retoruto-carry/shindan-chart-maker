@@ -3,8 +3,12 @@
     <h1>Title</h1>
     <p>{{ currentNodeTree.text }}</p>
     <template v-if="currentNodeTree.type === 'QUESTION'">
-      <button @click="handleYesClicked">yes</button>
-      <button @click="handleNoClicked">no</button>
+      <button @click="handleChoiceClicked(0)">
+        {{ currentNodeTree.choiceNodes[0].label }}
+      </button>
+      <button @click="handleChoiceClicked(1)">
+        {{ currentNodeTree.choiceNodes[1].label }}
+      </button>
     </template>
     <template v-else>
       <button @click="handleResetClicked">reset</button>
@@ -25,23 +29,39 @@ type LocalData = {
 
 const nodeTreeData: NodeTree = {
   type: 'QUESTION',
-  text: 'a?',
-  yes: {
-    type: 'QUESTION',
-    text: 'b?',
-    yes: {
-      type: 'RESULT',
-      text: 'result_a'
+  text: '質問その１',
+  choiceNodes: [
+    {
+      label: 'はい',
+      nodeTree: {
+        type: 'RESULT',
+        text: '結果その１'
+      }
     },
-    no: {
-      type: 'RESULT',
-      text: 'result_b'
+    {
+      label: 'いいえ',
+      nodeTree: {
+        type: 'QUESTION',
+        text: '質問その２',
+        choiceNodes: [
+          {
+            label: 'はい',
+            nodeTree: {
+              type: 'RESULT',
+              text: '結果その２'
+            }
+          },
+          {
+            label: 'いいえ',
+            nodeTree: {
+              type: 'RESULT',
+              text: '結果その３'
+            }
+          }
+        ]
+      }
     }
-  },
-  no: {
-    type: 'RESULT',
-    text: 'result_c'
-  }
+  ]
 }
 
 export default Vue.extend({
@@ -52,14 +72,9 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleYesClicked(): void {
-      if (this.currentNodeTree.yes) {
-        this.currentNodeTree = this.currentNodeTree.yes
-      }
-    },
-    handleNoClicked(): void {
-      if (this.currentNodeTree.no) {
-        this.currentNodeTree = this.currentNodeTree.no
+    handleChoiceClicked(index: number): void {
+      if (this.currentNodeTree.type === 'QUESTION') {
+        this.currentNodeTree = this.currentNodeTree.choiceNodes[index].nodeTree
       }
     },
     handleResetClicked(): void {
