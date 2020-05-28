@@ -14,12 +14,12 @@
         <div class="hidden group-hover:block absolute right-0 z-50">
           <div class="mt-2 py-2 w-48 bg-white rounded shadow-xl">
             <nuxt-link
-              v-show="$route.path !== '/home'"
-              to="/home"
+              v-show="$route.path !== '/posts/create'"
+              to="/posts/create"
               class="block px-4 py-2 text-gray-800 hover:bg-gray-300 hover:text-gray-900"
             >
               <i class="mdi mdi-home mr-1" />
-              ホームへ
+              診断を作成
             </nuxt-link>
             <a
               class="block px-4 py-2 text-gray-800 hover:bg-gray-300 hover:text-gray-900"

@@ -1,7 +1,9 @@
 <template>
   <header>
     <div class="bg-red-700 flex items-center justify-between px-4 py-1 h-12">
-      <span class="text-white font-bold">診断チャートメーカー</span>
+      <nuxt-link to="/">
+        <span class="text-white font-bold">診断チャートメーカー</span>
+      </nuxt-link>
       <client-only>
         <account-dropdown
           v-if="$auth.currentUser"
