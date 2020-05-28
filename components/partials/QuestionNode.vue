@@ -50,13 +50,13 @@
     <div v-if="nodeTree.type === 'QUESTION'" class="nodes table relative">
       <div class="node-wrapper table-cell relative">
         <QuestionNode
-          :node-tree="nodeTree.choiceNodes[0]"
+          :node-tree="nodeTree.choiceNodes[0].nodeTree"
           class="node relative"
         />
       </div>
       <div class="node-wrapper table-cell relative">
         <QuestionNode
-          :node-tree="nodeTree.choiceNodes[1]"
+          :node-tree="nodeTree.choiceNodes[1].nodeTree"
           class="node relative"
         />
       </div>
