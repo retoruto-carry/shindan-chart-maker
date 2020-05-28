@@ -2,7 +2,16 @@
   <div class="table text-center bg-gray-300">
     <div class="inline-block rounded mx-4 border border-gray-600 bg-white w-64">
       <div class="border-b border-gray-600">
-        <p class="text-sm text-gray-600">{{ displayType(nodeTree.type) }}</p>
+        <p class="text-sm text-gray-600 text-center relative">
+          <span class="">{{ displayType(nodeTree.type) }}</span>
+          <button
+            v-if="nodeTree.type === 'QUESTION'"
+            class="absolute right-0 mr-2 text-gray-500"
+            @click="handleDeleteClicked"
+          >
+            x
+          </button>
+        </p>
       </div>
       <textarea
         v-model="nodeTree.text"
@@ -57,6 +66,11 @@ export default Vue.extend({
         type: 'RESULT',
         text: 'result_default'
       })
+    },
+    handleDeleteClicked() {
+      this.$delete(this.nodeTree, 'no')
+      this.$delete(this.nodeTree, 'yes')
+      this.nodeTree.type = 'RESULT'
     },
     displayType(type: NodeType): string {
       if (type === 'QUESTION') {
