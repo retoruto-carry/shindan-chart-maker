@@ -6,6 +6,7 @@
           <span class="">{{ displayType(nodeTree.type) }}</span>
           <button
             v-if="nodeTree.type === 'QUESTION'"
+            type="button"
             class="absolute right-0 mr-2 text-gray-500"
             @click="handleDeleteClicked"
           >
@@ -26,6 +27,7 @@
             v-model="nodeTree.choiceNodes[0].label"
             class="border w-full text-gray-700 text-center text-sm"
             type="text"
+            required
             placeholder="選択肢１"
           />
         </div>
@@ -34,24 +36,27 @@
             v-model="nodeTree.choiceNodes[1].label"
             class="border w-full text-gray-700 text-center text-sm"
             type="text"
+            required
             placeholder="選択肢２"
           />
         </div>
       </div>
       <div v-else class="cursor-pointer" @click="handlePlusClicked">
-        <p class="text-xs text-gray-600">+ 分岐を追加</p>
+        <button type="button" class="text-xs text-gray-600">
+          + 分岐を追加
+        </button>
       </div>
     </div>
     <div v-if="nodeTree.type === 'QUESTION'" class="nodes table relative">
       <div class="node-wrapper table-cell relative">
         <QuestionNode
-          :node-tree="nodeTree.choiceNodes[0]"
+          :node-tree="nodeTree.choiceNodes[0].nodeTree"
           class="node relative"
         />
       </div>
       <div class="node-wrapper table-cell relative">
         <QuestionNode
-          :node-tree="nodeTree.choiceNodes[1]"
+          :node-tree="nodeTree.choiceNodes[1].nodeTree"
           class="node relative"
         />
       </div>
