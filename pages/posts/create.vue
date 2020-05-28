@@ -15,9 +15,10 @@
       </div>
       <button
         type="submit"
-        class="mt-8 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-8 rounded-full"
+        class="mt-8 bg-red-500 hover:bg-red-700 text-white font-bold h-12 w-48 rounded-full"
       >
-        作成
+        <span v-if="!isSubmitting">作成</span>
+        <div v-else class="spinner"></div>
       </button>
     </form>
   </div>
@@ -31,6 +32,7 @@ import { NodeTree } from '~/types/struct'
 type LocalData = {
   nodeTree: NodeTree
   title: string
+  isSubmitting: Boolean
 }
 
 const nodeTreeData: NodeTree = {
@@ -61,16 +63,23 @@ export default Vue.extend({
   data(): LocalData {
     return {
       nodeTree: nodeTreeData,
-      title: ''
+      title: '',
+      isSubmitting: false
     }
   },
   methods: {
     submitPost() {
-      this.$firestore.collection('posts').add({
-        title: this.title,
-        nodeTree: JSON.stringify(this.nodeTree),
-        userId: this.$auth.currentUser.uid
-      })
+      this.isSubmitting = true
+      this.$firestore
+        .collection('posts')
+        .add({
+          title: this.title,
+          nodeTree: JSON.stringify(this.nodeTree),
+          userId: this.$auth.currentUser.uid
+        })
+        .then((ref) => {
+          this.$router.push(`/posts/${ref.id}`)
+        })
     }
   }
 })

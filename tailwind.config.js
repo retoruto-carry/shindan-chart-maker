@@ -6,13 +6,23 @@
  */
 
 module.exports = {
-  theme: {},
+  theme: {
+    spinner: (theme) => ({
+      default: {
+        color: theme('colors.white'),
+        size: '1em',
+        border: '2px',
+        speed: '500ms'
+      }
+    })
+  },
   variants: {
     display: ['group-hover'],
     opacity: ['disabled'],
     backgroundColor: ['disabled', 'hover'],
     textColor: ['responsive', 'hover'],
-    cursor: ['disabled', 'hover']
+    cursor: ['disabled', 'hover'],
+    spinner: ['responsive']
   },
-  plugins: []
+  plugins: [require('tailwindcss-spinner')()]
 }

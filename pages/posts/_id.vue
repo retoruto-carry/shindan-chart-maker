@@ -116,7 +116,7 @@ export default Vue.extend({
         {
           property: 'og:url',
           hid: 'og:url',
-          content: 'TODO: INPUT URL'
+          content: 'TODO: INPUT '
         },
         { name: 'twitter:title', hid: 'twitter:title', content: title }
       ]
