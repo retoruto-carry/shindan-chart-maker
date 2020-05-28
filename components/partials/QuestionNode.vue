@@ -1,18 +1,21 @@
 <template>
-  <div class="table text-center">
-    <div class="inline-block rounded mx-4 border border-gray-600 p-1 w-32">
-      <p class="text-gray-700 text-sm h-24">
+  <div class="table text-center bg-gray-300">
+    <div class="inline-block rounded mx-4 border border-gray-600 bg-white w-32">
+      <div class="border-b border-gray-600">
+        <p class="text-sm text-gray-600">{{ displayType(nodeTree.type) }}</p>
+      </div>
+      <p class="text-gray-700 text-sm h-24 p-1">
         {{ nodeTree.text }}
       </p>
       <div
         v-if="nodeTree.type === 'QUESTION'"
         class="flex content-between w-32"
       >
-        <div class="flex-1 text-sm text-gray-500">YES</div>
-        <div class="flex-1 text-sm text-gray-500">NO</div>
+        <div class="flex-1 text-sm text-red-600">YES</div>
+        <div class="flex-1 text-sm text-gray-600">NO</div>
       </div>
       <div v-else class="cursor-pointer" @click="handlePlusClicked">
-        <span>+</span>
+        <p class="text-xs text-gray-600">+ 分岐を追加</p>
       </div>
     </div>
     <div v-if="nodeTree.type === 'QUESTION'" class="nodes table relative">
@@ -28,8 +31,8 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import QuestionNode from '~/components/QuestionNode'
-import { NodeTree } from '~/types/struct'
+import QuestionNode from '~/components/partials/QuestionNode'
+import { NodeTree, NodeType } from '~/types/struct'
 
 export default Vue.extend({
   name: 'QuestionNode',
@@ -53,6 +56,13 @@ export default Vue.extend({
         type: 'RESULT',
         text: 'result_default'
       })
+    },
+    displayType(type: NodeType): string {
+      if (type === 'QUESTION') {
+        return '質問'
+      } else {
+        return '結果'
+      }
     }
   }
 })
@@ -68,7 +78,7 @@ export default Vue.extend({
 
 /* | */
 .node:before {
-  outline: solid 1px #666;
+  outline: solid 1px theme('colors.gray.900');
   content: '';
   height: 1rem;
   left: 50%;
@@ -84,14 +94,14 @@ export default Vue.extend({
   left: 50%;
   margin-left: -0.4rem;
   border: 0.4rem solid transparent;
-  border-top: 0.4rem solid #666;
+  border-top: 0.4rem solid theme('colors.gray.900');
   z-index: 2;
 }
 
 /* | | */
 .nodes:before {
-  border: solid #666;
-  background-color: white;
+  border: solid theme('colors.gray.900');
+  background-color: theme('colors.gray.300');
   z-index: 1000;
   border-width: 0px 0.1rem 0px 0.1rem;
   content: '';
@@ -105,7 +115,7 @@ export default Vue.extend({
 
 /* ___ */
 .node-wrapper:before {
-  outline: solid 0.1rem #666;
+  outline: solid 0.1rem theme('colors.gray.900');
   content: '';
   left: 0;
   position: absolute;
