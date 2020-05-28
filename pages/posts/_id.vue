@@ -1,20 +1,32 @@
 <template>
   <div>
-    <h1>{{ post.title }}</h1>
-    <p>{{ currentNodeTree.text }}</p>
+    <h1 class="text-xl mb-4">{{ post.title }}</h1>
     <template v-if="currentNodeTree.type === 'QUESTION'">
-      <button @click="handleChoiceClicked(0)">
+      <p class="text-lg mb-4">{{ currentNodeTree.text }}</p>
+      <button
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-1"
+        @click="handleChoiceClicked(0)"
+      >
         {{ currentNodeTree.choiceNodes[0].label }}
       </button>
-      <button @click="handleChoiceClicked(1)">
+      <button
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        @click="handleChoiceClicked(1)"
+      >
         {{ currentNodeTree.choiceNodes[1].label }}
       </button>
     </template>
     <template v-else>
-      <button @click="handleResetClicked">reset</button>
+      <p class="text-2xl text-red-500 font-bold mb-4">
+        {{ currentNodeTree.text }}
+      </p>
+      <button
+        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        @click="handleResetClicked"
+      >
+        最初から
+      </button>
     </template>
-    <hr />
-    <p class="text-gray-400">{{ JSON.stringify(currentNodeTree) }}</p>
   </div>
 </template>
 
