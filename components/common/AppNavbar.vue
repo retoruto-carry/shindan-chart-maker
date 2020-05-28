@@ -16,8 +16,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import accountDropdown from '~/components/partials/AccountDropdown'
-import signInButtonNav from '~/components/common/signIn/SignInButtonNav'
+import accountDropdown from '~/components/partials/AccountDropdown.vue'
+import signInButtonNav from '~/components/common/signIn/SignInButtonNav.vue'
 
 export default Vue.extend({
   name: 'AppNavbar',
