@@ -66,14 +66,10 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import QuestionNode from '~/components/partials/QuestionNode'
 import { NodeTree, NodeType } from '~/types/struct'
 
 export default Vue.extend({
   name: 'QuestionNode',
-  components: {
-    QuestionNode
-  },
   props: {
     nodeTree: {
       type: Object as PropType<NodeTree>,
