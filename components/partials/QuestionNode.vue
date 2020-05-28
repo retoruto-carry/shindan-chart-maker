@@ -27,6 +27,7 @@
             v-model="nodeTree.choiceNodes[0].label"
             class="border w-full text-gray-700 text-center text-sm"
             type="text"
+            required
             placeholder="選択肢１"
           />
         </div>
@@ -35,6 +36,7 @@
             v-model="nodeTree.choiceNodes[1].label"
             class="border w-full text-gray-700 text-center text-sm"
             type="text"
+            required
             placeholder="選択肢２"
           />
         </div>
