@@ -1,16 +1,17 @@
 <template>
   <div class="table text-center bg-gray-300">
-    <div class="inline-block rounded mx-4 border border-gray-600 bg-white w-32">
+    <div class="inline-block rounded mx-4 border border-gray-600 bg-white w-64">
       <div class="border-b border-gray-600">
         <p class="text-sm text-gray-600">{{ displayType(nodeTree.type) }}</p>
       </div>
-      <p class="text-gray-700 text-sm h-24 p-1">
-        {{ nodeTree.text }}
-      </p>
-      <div
-        v-if="nodeTree.type === 'QUESTION'"
-        class="flex content-between w-32"
-      >
+      <textarea
+        v-model="nodeTree.text"
+        rows="4"
+        required
+        class="bg-white border border-gray-300 block w-full h-full text-sm"
+        placeholder="テキストを入力"
+      />
+      <div v-if="nodeTree.type === 'QUESTION'" class="flex content-between">
         <div class="flex-1 text-sm text-red-600">YES</div>
         <div class="flex-1 text-sm text-gray-600">NO</div>
       </div>
