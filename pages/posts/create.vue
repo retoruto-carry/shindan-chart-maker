@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import QuestionNode from '~/components/partials/QuestionNode'
+import QuestionNode from '~/components/partials/QuestionNode.vue'
 import { NodeTree } from '~/types/struct'
 
 type LocalData = {
