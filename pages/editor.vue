@@ -3,6 +3,7 @@
     <h1 class="text-3xl font-bold mb-4">新しい診断を作成しよう</h1>
     <h2 class="text-2xl font-semibold mb-1">タイトル</h2>
     <input
+      v-model="title"
       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       type="text"
       placeholder="タイトルを入力"
@@ -21,6 +22,7 @@ import { NodeTree } from '~/types/struct'
 
 type LocalData = {
   nodeTree: NodeTree
+  title: string
 }
 
 const nodeTreeData: NodeTree = {
@@ -50,9 +52,17 @@ export default Vue.extend({
   },
   data(): LocalData {
     return {
-      nodeTree: nodeTreeData
+      nodeTree: nodeTreeData,
+      title: ''
     }
   },
-  methods: {}
+  methods: {
+    createPost() {
+      // FIXME
+      this.$firestore.collection('posts').add({
+        title: this.title
+      })
+    }
+  }
 })
 </script>
