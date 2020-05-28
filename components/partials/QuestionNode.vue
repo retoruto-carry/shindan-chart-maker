@@ -6,6 +6,7 @@
           <span class="">{{ displayType(nodeTree.type) }}</span>
           <button
             v-if="nodeTree.type === 'QUESTION'"
+            type="button"
             class="absolute right-0 mr-2 text-gray-500"
             @click="handleDeleteClicked"
           >
@@ -39,7 +40,9 @@
         </div>
       </div>
       <div v-else class="cursor-pointer" @click="handlePlusClicked">
-        <p class="text-xs text-gray-600">+ 分岐を追加</p>
+        <button type="button" class="text-xs text-gray-600">
+          + 分岐を追加
+        </button>
       </div>
     </div>
     <div v-if="nodeTree.type === 'QUESTION'" class="nodes table relative">
