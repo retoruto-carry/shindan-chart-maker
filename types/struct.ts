@@ -5,12 +5,10 @@ type ChoiceNode = {
   nodeTree: NodeTree
 }
 
-type ChoiceNodes = ChoiceNode[]
-
 type QuestionNodeTree = {
   text: string
   type: 'QUESTION'
-  choiceNodes: ChoiceNodes
+  choiceNodes: ChoiceNode[]
 }
 
 type ResultNodeTree = {
