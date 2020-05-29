@@ -37,6 +37,7 @@
         最初から
       </button>
     </template>
+    <PostListRecent class="mt-24" />
   </div>
 </template>
 
@@ -45,6 +46,7 @@ import Vue from 'vue'
 import { DocumentNotExistError } from '../../types/error'
 import { NodeTree, User, Post } from '~/types/struct'
 import { toUser, toPost } from '~/utils/transformer/toObject'
+import PostListRecent from '~/components/partials/post/PostListRecent.vue'
 
 type LocalData = {
   post: Post | null
@@ -53,6 +55,9 @@ type LocalData = {
 }
 
 export default Vue.extend({
+  components: {
+    PostListRecent
+  },
   async asyncData({ app, params: { id }, error }) {
     try {
       const postDocument = await app.$firestore
