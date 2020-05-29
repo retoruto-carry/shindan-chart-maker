@@ -18,7 +18,7 @@ export default Vue.extend({
   name: 'PostList',
   props: {
     posts: {
-      type: Object as PropType<Post[]>,
+      type: Array as PropType<Post[]>,
       required: true
     }
   },
