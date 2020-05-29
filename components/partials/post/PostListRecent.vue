@@ -1,6 +1,5 @@
 <template>
   <div class="text-center">
-    <h1 class="text-2xl font-bold text-red-600">診断チャートメーカー</h1>
     <h2 class="text-xl font-bold mt-2">新着一覧</h2>
     <PostList :posts="posts" class="mt-2" />
     <button
@@ -32,21 +31,6 @@ export default Vue.extend({
   components: {
     PostList
   },
-  async asyncData({ app }) {
-    const postDocuments = await app.$firestore
-      .collection('posts')
-      .orderBy('createdAt', 'desc')
-      .limit(LIMIT)
-      .get()
-    const posts = postDocuments.docs.map(
-      (postDocument): Post => {
-        return toPost(postDocument)
-      }
-    )
-    return {
-      posts
-    }
-  },
   data(): LocalData {
     return {
       hasNext: true,
@@ -58,6 +42,18 @@ export default Vue.extend({
     LIMIT(): number {
       return LIMIT
     }
+  },
+  async created() {
+    const postDocuments = await this.$firestore
+      .collection('posts')
+      .orderBy('createdAt', 'desc')
+      .limit(LIMIT)
+      .get()
+    this.posts = postDocuments.docs.map(
+      (postDocument): Post => {
+        return toPost(postDocument)
+      }
+    )
   },
   methods: {
     async readMorePosts(): Promise<void> {
