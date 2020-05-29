@@ -2,15 +2,24 @@
   <div class="table text-center bg-gray-300">
     <div class="inline-block rounded mx-4 border border-gray-600 bg-white w-64">
       <div class="border-b border-gray-600">
-        <p class="text-sm text-gray-600 text-center relative">
-          <span class="">{{ displayType(nodeTree.type) }}</span>
+        <p
+          class="text-sm text-gray-600 text-center relative"
+          :class="[nodeTree.type === 'QUESTION' ? 'bg-gray-700' : 'bg-red-600']"
+        >
+          <span class="text-white">
+            <i
+              v-show="nodeTree.type === 'QUESTION'"
+              class="mdi mdi-comment-question-outline"
+            />
+            {{ displayNodeType(nodeTree.type) }}
+          </span>
           <button
             v-if="nodeTree.type === 'QUESTION'"
             type="button"
-            class="absolute right-0 mr-2 text-gray-500"
+            class="absolute right-0 mr-2 text-white"
             @click="handleDeleteClicked"
           >
-            x
+            <i class="mdi mdi-trash-can-outline mr-1" />
           </button>
         </p>
       </div>
@@ -42,8 +51,12 @@
         </div>
       </div>
       <div v-else class="cursor-pointer" @click="handlePlusClicked">
-        <button type="button" class="text-xs text-gray-600">
-          + 分岐を追加
+        <button
+          type="button"
+          class="block w-full text-xs text-gray-700 bg-gray-200 border border-gray-500 hover:text-white hover:bg-gray-500 rounded-b"
+        >
+          <i class="mdi mdi-plus mr-1" />
+          分岐を追加
         </button>
       </div>
     </div>
@@ -100,7 +113,7 @@ export default Vue.extend({
       this.nodeTree.type = 'RESULT'
       this.$delete(this.nodeTree, 'choiceNodes')
     },
-    displayType(type: NodeType): string {
+    displayNodeType(type: NodeType): string {
       if (type === 'QUESTION') {
         return '質問'
       } else {
