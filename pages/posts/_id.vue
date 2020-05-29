@@ -32,25 +32,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { NodeTree } from '~/types/struct'
-
-type PostDocumentData = {
-  title: string
-  nodeTree: string
-  userId: string
-}
-
-type Post = {
-  title: string
-  nodeTree: NodeTree
-  userId: string
-}
-
-type User = {
-  id: string
-  displayName: string
-  photoUrl: string
-}
+import { NodeTree, User, Post } from '~/types/struct'
+import { toUser, toPost } from '~/utils/transformer/toObject'
 
 type LocalData = {
   post: Post | null
@@ -59,42 +42,20 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  async asyncData({ app, params: { id }, error }) {
-    const postDocumentData = await app.$firestore
+  // TODO: !doc.exist()のときに404を表示するようにする
+  async asyncData({ app, params: { id } }) {
+    const postDocument = await app.$firestore
       .collection('posts')
       .doc(id)
       .get()
-      .then((doc) => {
-        if (doc.exists) {
-          return doc.data()
-        } else {
-          return error({
-            statusCode: 404
-          })
-        }
-      })
-    const _postDocumentData = (postDocumentData as any) as PostDocumentData
-    const post: Post = {
-      title: _postDocumentData.title,
-      userId: _postDocumentData.userId,
-      nodeTree: JSON.parse(_postDocumentData.nodeTree)
-    }
-    const user = await app.$firestore
+    const post = toPost(postDocument)
+    const userDocument = await app.$firestore
       .collection('users')
       .doc(post.userId)
       .get()
-      .then((doc) => {
-        if (doc.exists) {
-          return doc.data()
-        } else {
-          return error({
-            statusCode: 404
-          })
-        }
-      })
     return {
       post,
-      user,
+      user: toUser(userDocument),
       currentNodeTree: post.nodeTree
     }
   },
@@ -136,9 +97,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style scoped>
-.HomeGrid {
-  grid-template-columns: repeat(4, 220px);
-}
-</style>

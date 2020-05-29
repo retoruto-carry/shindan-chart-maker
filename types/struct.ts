@@ -1,21 +1,39 @@
-export type NodeType = 'QUESTION' | 'RESULT'
-
-export type ChoiceNode = {
+type ChoiceNode = {
   label: string
   nodeTree: NodeTree
 }
 
-export type ChoiceNodes = ChoiceNode[]
+type ChoiceNodes = ChoiceNode[]
 
-export type QuestionNodeTree = {
+type QuestionNodeTree = {
   text: string
   type: 'QUESTION'
   choiceNodes: ChoiceNodes
 }
 
-export type ResultNodeTree = {
+type ResultNodeTree = {
   text: string
   type: 'RESULT'
 }
 
 export type NodeTree = QuestionNodeTree | ResultNodeTree
+
+export type User = {
+  id: string
+  displayName: string
+  photoUrl: string
+}
+
+export type Post = {
+  id: string
+  title: string
+  nodeTree: NodeTree
+  userId: string
+}
+
+export type PostDocumentData = {
+  id: string
+  title: string
+  nodeTree: string
+  userId: string
+}
