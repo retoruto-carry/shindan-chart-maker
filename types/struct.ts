@@ -28,6 +28,7 @@ export type User = {
 export type Post = {
   id: string
   title: string
+  hashtag: string
   nodeTree: NodeTree
   userId: string
   createdAt: Date
