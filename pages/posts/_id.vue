@@ -119,7 +119,7 @@ export default Vue.extend({
         {
           property: 'og:url',
           hid: 'og:url',
-          content: 'TODO: INPUT '
+          content: `${process.env.BASE_URL}/posts/${post.id}`
         },
         { name: 'twitter:title', hid: 'twitter:title', content: title }
       ]
