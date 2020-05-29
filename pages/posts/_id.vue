@@ -23,7 +23,13 @@
         <span class="whitespace-pre-wrap">{{ currentNodeTree.text }}</span>
       </p>
       <button
-        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto mb-2"
+        @click="handleTweetResultClicked"
+      >
+        結果をツイート
+      </button>
+      <button
+        class="block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mx-auto"
         @click="handleResetClicked"
       >
         最初から
@@ -87,6 +93,18 @@ export default Vue.extend({
     handleResetClicked(): void {
       const post = this.post! as Post
       this.currentNodeTree = post.nodeTree
+    },
+    handleTweetResultClicked(): void {
+      const currentNodeTree = this.currentNodeTree! as NodeTree
+      const post = this.post! as Post
+      const tweet: string =
+        'https://twitter.com/intent/tweet?url=' +
+        encodeURIComponent(`${process.env.BASE_URL}/posts/${post.id}`) +
+        '&text=' +
+        encodeURIComponent(
+          `【結果】\r\n${currentNodeTree.text}\r\n\r\n${post.title} - 診断チャートメーカー`
+        )
+      window.open(tweet)
     }
   },
   head() {
