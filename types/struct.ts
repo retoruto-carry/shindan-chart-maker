@@ -1,3 +1,5 @@
+export type NodeType = 'QUESTION' | 'RESULT'
+
 type ChoiceNode = {
   label: string
   nodeTree: NodeTree
