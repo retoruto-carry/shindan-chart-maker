@@ -26,12 +26,14 @@
         class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto mb-2"
         @click="handleTweetResultClicked"
       >
+        <i class="mdi mdi-twitter mr-1" />
         結果をツイート
       </button>
       <button
         class="block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mx-auto"
         @click="handleResetClicked"
       >
+        <i class="mdi mdi-refresh mr-1" />
         最初から
       </button>
     </template>
@@ -102,7 +104,7 @@ export default Vue.extend({
         encodeURIComponent(`${process.env.BASE_URL}/posts/${post.id}`) +
         '&text=' +
         encodeURIComponent(
-          `【結果】\r\n${currentNodeTree.text}\r\n\r\n${post.title} - 診断チャートメーカー`
+          `【結果】\r\n${currentNodeTree.text}\r\n\r\n#${post.hashtag}\r\n${post.title} - 診断チャートメーカー`
         )
       window.open(tweet)
     }
@@ -117,7 +119,7 @@ export default Vue.extend({
         {
           property: 'og:url',
           hid: 'og:url',
-          content: 'TODO: INPUT '
+          content: `${process.env.BASE_URL}/posts/${post.id}`
         },
         { name: 'twitter:title', hid: 'twitter:title', content: title }
       ]
