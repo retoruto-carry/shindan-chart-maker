@@ -38,17 +38,7 @@
       </button>
     </template>
 
-    <div class="mt-24">
-      <p class="text-sm text-gray-500">超簡単♪</p>
-      <p class="text-red-600 mb-1">あなたも診断を作ってみよう</p>
-      <button
-        class="block mx-auto bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-1 px-4 border border-red-500 hover:border-transparent rounded"
-        @click="$router.push('/posts/create')"
-      >
-        <i class="mdi mdi-pencil mr-1" />
-        診断をつくる
-      </button>
-    </div>
+    <ButtonPostCreate class="mt-24" />
 
     <PostListRecent class="mt-12" />
   </div>
@@ -60,6 +50,7 @@ import { DocumentNotExistError } from '../../types/error'
 import { NodeTree, User, Post } from '~/types/struct'
 import { toUser, toPost } from '~/utils/transformer/toObject'
 import PostListRecent from '~/components/partials/post/PostListRecent.vue'
+import ButtonPostCreate from '~/components/partials/ButtonPostCreate.vue'
 
 type LocalData = {
   post: Post | null
@@ -69,7 +60,8 @@ type LocalData = {
 
 export default Vue.extend({
   components: {
-    PostListRecent
+    PostListRecent,
+    ButtonPostCreate
   },
   async asyncData({ app, params: { id }, error }) {
     try {
