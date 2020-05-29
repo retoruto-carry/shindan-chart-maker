@@ -10,7 +10,8 @@
         <client-only>
           <div class="flex items-center">
             <nuxt-link to="/posts/create" class="text-white align-middle mr-4">
-              + 作成
+              <i class="mdi mdi-pencil" />
+              作成
             </nuxt-link>
             <account-dropdown
               v-if="$auth.currentUser"

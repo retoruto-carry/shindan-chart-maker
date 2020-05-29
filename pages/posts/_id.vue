@@ -26,12 +26,14 @@
         class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto mb-2"
         @click="handleTweetResultClicked"
       >
+        <i class="mdi mdi-twitter mr-1" />
         結果をツイート
       </button>
       <button
         class="block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mx-auto"
         @click="handleResetClicked"
       >
+        <i class="mdi mdi-refresh mr-1" />
         最初から
       </button>
     </template>

@@ -17,7 +17,10 @@
         type="submit"
         class="mt-8 bg-red-500 hover:bg-red-700 text-white font-bold h-12 w-48 rounded-full"
       >
-        <span v-if="!isSubmitting">作成</span>
+        <span v-if="!isSubmitting">
+          <i class="mdi mdi-plus mr-1 text-lg" />
+          作成
+        </span>
         <div v-else class="spinner"></div>
       </button>
     </form>
