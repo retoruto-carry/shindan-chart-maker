@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { DocumentNotExistError } from '../../types/error'
 import { NodeTree, User, Post } from '~/types/struct'
 import { toUser, toPost } from '~/utils/transformer/toObject'
 
@@ -42,21 +43,29 @@ type LocalData = {
 }
 
 export default Vue.extend({
-  // TODO: !doc.exist()のときに404を表示するようにする
-  async asyncData({ app, params: { id } }) {
-    const postDocument = await app.$firestore
-      .collection('posts')
-      .doc(id)
-      .get()
-    const post = toPost(postDocument)
-    const userDocument = await app.$firestore
-      .collection('users')
-      .doc(post.userId)
-      .get()
-    return {
-      post,
-      user: toUser(userDocument),
-      currentNodeTree: post.nodeTree
+  async asyncData({ app, params: { id }, error }) {
+    try {
+      const postDocument = await app.$firestore
+        .collection('posts')
+        .doc(id)
+        .get()
+      const post = toPost(postDocument)
+      const userDocument = await app.$firestore
+        .collection('users')
+        .doc(post.userId)
+        .get()
+      return {
+        post,
+        user: toUser(userDocument),
+        currentNodeTree: post.nodeTree
+      }
+    } catch (e) {
+      if (e instanceof DocumentNotExistError) {
+        error({
+          statusCode: 404,
+          message: 'ページが見つかりませんでした'
+        })
+      }
     }
   },
   data(): LocalData {
