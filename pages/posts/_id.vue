@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="text-center">
     <h1 class="text-xl">{{ post.title }}</h1>
     <p class="text-gray-600 text-sm mt-1 mb-4">作者：{{ user.displayName }}</p>
     <template v-if="currentNodeTree.type === 'QUESTION'">
-      <p class="text-lg mb-4 whitespace-pre">{{ currentNodeTree.text }}</p>
+      <p class="text-lg mb-4 whitespace-pre-wrap">{{ currentNodeTree.text }}</p>
       <button
         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-1"
         @click="handleChoiceClicked(0)"
@@ -18,12 +18,18 @@
       </button>
     </template>
     <template v-else>
-      <p class="text-lg">結果</p>
-      <p class="text-2xl text-red-500 font-bold mb-4 whitespace-pre">
-        {{ currentNodeTree.text }}
+      <p class="text-lg mb-2">結果</p>
+      <p class="text-2xl text-red-500 font-bold mb-8">
+        <span class="whitespace-pre-wrap">{{ currentNodeTree.text }}</span>
       </p>
       <button
-        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto mb-2"
+        @click="handleTweetResultClicked"
+      >
+        結果をツイート
+      </button>
+      <button
+        class="block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mx-auto"
         @click="handleResetClicked"
       >
         最初から
@@ -87,6 +93,18 @@ export default Vue.extend({
     handleResetClicked(): void {
       const post = this.post! as Post
       this.currentNodeTree = post.nodeTree
+    },
+    handleTweetResultClicked(): void {
+      const currentNodeTree = this.currentNodeTree! as NodeTree
+      const post = this.post! as Post
+      const tweet: string =
+        'https://twitter.com/intent/tweet?url=' +
+        encodeURIComponent(`${process.env.BASE_URL}/posts/${post.id}`) +
+        '&text=' +
+        encodeURIComponent(
+          `【結果】\r\n${currentNodeTree.text}\r\n\r\n${post.title} - 診断チャートメーカー`
+        )
+      window.open(tweet)
     }
   },
   head() {
@@ -95,7 +113,6 @@ export default Vue.extend({
     return {
       title,
       meta: [
-        { name: 'viewport', hid: 'viewport', content: 'width=1024' },
         { property: 'og:title', hid: 'og:title', content: title },
         {
           property: 'og:url',
