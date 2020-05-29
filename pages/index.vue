@@ -42,7 +42,7 @@ import PostList from '~/components/partials/post/PostList.vue'
 import { Post } from '~/types/struct'
 import { toPost } from '~/utils/transformer/toObject'
 
-const LIMIT: number = 15
+const LIMIT: number = 30
 
 type LocalData = {
   hasNext: boolean
