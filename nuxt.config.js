@@ -88,6 +88,13 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(_config, _ctx) {}
+    extend(config, { isServer }) {
+      if (isServer) {
+        config.externals = {
+          '@firebase/app': 'commonjs @firebase/app',
+          '@firebase/firestore': 'commonjs @firebase/firestore'
+        }
+      }
+    }
   }
 }
