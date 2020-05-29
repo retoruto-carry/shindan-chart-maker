@@ -17,7 +17,7 @@ module.exports = {
     })
   },
   variants: {
-    display: ['group-hover'],
+    display: ['responsive', 'group-hover'],
     opacity: ['disabled'],
     backgroundColor: ['disabled', 'hover'],
     textColor: ['responsive', 'hover'],

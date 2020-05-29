@@ -2,7 +2,7 @@
   <sign-in>
     <template v-slot:default="{ signIn }">
       <button
-        class="bg-transparent text-white py-1 px-2 border border-white rounded"
+        class="bg-transparent text-white text-sm md:text-base py-1 px-2 border border-white rounded"
         @click="signIn()"
       >
         <i class="mdi mdi-twitter" />
