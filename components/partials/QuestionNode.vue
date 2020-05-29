@@ -145,7 +145,7 @@ export default Vue.extend({
 .nodes:before {
   border: solid theme('colors.gray.900');
   background-color: theme('colors.gray.300');
-  z-index: 1000;
+  z-index: 10;
   border-width: 0px 0.1rem 0px 0.1rem;
   content: '';
   height: 1.1rem;

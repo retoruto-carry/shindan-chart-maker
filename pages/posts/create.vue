@@ -21,12 +21,25 @@
         <div v-else class="spinner"></div>
       </button>
     </form>
+    <aside
+      v-show="!$auth.currentUser"
+      class="w-full h-full fixed left-0 top-0 bg-gray-800 bg-opacity-75 rounded z-50 flex items-center justify-center"
+    >
+      <div class="w-4/12  bg-white p-8">
+        <p class="font-bold mb-4">作成にはログインが必要です</p>
+        <SignInButton class="mb-4" />
+        <nuxt-link to="/" class="text-xs underline text-red-600">
+          トップへ
+        </nuxt-link>
+      </div>
+    </aside>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import QuestionNode from '~/components/partials/QuestionNode.vue'
+import SignInButton from '~/components/common/signIn/SignInButton.vue'
 import { NodeTree } from '~/types/struct'
 
 type LocalData = {
@@ -58,7 +71,8 @@ const nodeTreeData: NodeTree = {
 
 export default Vue.extend({
   components: {
-    QuestionNode
+    QuestionNode,
+    SignInButton
   },
   data(): LocalData {
     return {

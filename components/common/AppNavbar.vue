@@ -8,12 +8,17 @@
           <span class="text-white font-bold">診断チャートメーカー</span>
         </nuxt-link>
         <client-only>
-          <account-dropdown
-            v-if="$auth.currentUser"
-            :photo-url="$auth.currentUser.photoURL"
-            class="ml-6"
-          />
-          <sign-in-button-nav v-else />
+          <div class="flex items-center">
+            <nuxt-link to="/posts/create" class="text-white align-middle mr-4">
+              + 作成
+            </nuxt-link>
+            <account-dropdown
+              v-if="$auth.currentUser"
+              :photo-url="$auth.currentUser.photoURL"
+              class="ml-6"
+            />
+            <sign-in-button-nav v-else />
+          </div>
         </client-only>
       </div>
     </div>
