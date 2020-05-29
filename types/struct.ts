@@ -37,5 +37,6 @@ export type Post = {
 export type PostDocumentData = {
   id: string
   title: string
+  hashtag: string
   userId: string
 }
