@@ -29,11 +29,11 @@ export type Post = {
   title: string
   nodeTree: NodeTree
   userId: string
+  createdAt: Date
 }
 
 export type PostDocumentData = {
   id: string
   title: string
-  nodeTree: string
   userId: string
 }

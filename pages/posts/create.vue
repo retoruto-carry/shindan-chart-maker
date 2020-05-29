@@ -75,7 +75,8 @@ export default Vue.extend({
         .add({
           title: this.title,
           nodeTree: JSON.stringify(this.nodeTree),
-          userId: this.$auth.currentUser.uid
+          userId: this.$auth.currentUser.uid,
+          createdAt: this.$firebase.firestore.FieldValue.serverTimestamp()
         })
         .then((ref) => {
           this.$router.push(`/posts/${ref.id}`)
