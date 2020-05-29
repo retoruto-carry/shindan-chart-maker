@@ -1,7 +1,8 @@
 <template>
   <div class="text-center">
-    <h1 class="text-2xl font-bold text-red-600">診断チャートメーカー</h1>
-    <h2 class="text-xl font-bold mt-2">新着一覧</h2>
+    <h1 class="text-3xl font-bold text-red-600">診断チャートメーカー</h1>
+    <ButtonPostCreate class="mt-8" />
+    <h2 class="text-xl font-bold mt-12">新着一覧</h2>
     <PostList :posts="posts" class="mt-2" />
     <button
       v-show="hasNext && posts.length >= LIMIT"
@@ -11,16 +12,18 @@
       <span v-if="!isProcessing">もっと見る</span>
       <div v-else class="spinner"></div>
     </button>
+    <ButtonPostCreate class="mt-12" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import PostList from '~/components/partials/post/PostList.vue'
+import ButtonPostCreate from '~/components/partials/ButtonPostCreate.vue'
 import { Post } from '~/types/struct'
 import { toPost } from '~/utils/transformer/toObject'
 
-const LIMIT: number = 15
+const LIMIT: number = 30
 
 type LocalData = {
   hasNext: boolean
@@ -30,7 +33,8 @@ type LocalData = {
 
 export default Vue.extend({
   components: {
-    PostList
+    PostList,
+    ButtonPostCreate
   },
   async asyncData({ app }) {
     const postDocuments = await app.$firestore

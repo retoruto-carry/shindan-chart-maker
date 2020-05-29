@@ -11,7 +11,7 @@
           <div class="flex items-center">
             <nuxt-link to="/posts/create" class="text-white align-middle mr-4">
               <i class="mdi mdi-pencil" />
-              作成
+              <span class="hidden md:inline">作成</span>
             </nuxt-link>
             <account-dropdown
               v-if="$auth.currentUser"
