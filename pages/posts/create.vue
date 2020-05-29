@@ -43,8 +43,9 @@
       v-show="!$auth.currentUser"
       class="w-full h-full fixed left-0 top-0 bg-gray-800 bg-opacity-75 rounded z-50 flex items-center justify-center"
     >
-      <div class="w-4/12  bg-white p-8">
-        <p class="font-bold mb-4">作成にはログインが必要です</p>
+      <div class="bg-white p-10 rounded">
+        <p class="font-bold">ログインして診断をつくろう</p>
+        <p class="mb-8 mt-1 text-gray-600">作成にはログインが必要です</p>
         <SignInButton class="mb-4" />
         <nuxt-link to="/" class="text-xs underline text-red-600">
           トップへ
