@@ -53,9 +53,9 @@ type User = {
 }
 
 type LocalData = {
-  post: Post | null
-  user: User | null
-  currentNodeTree: NodeTree | null
+  post: Post
+  user: User
+  currentNodeTree: NodeTree
 }
 
 export default Vue.extend({
@@ -64,34 +64,22 @@ export default Vue.extend({
       .collection('posts')
       .doc(id)
       .get()
-      .then((doc) => {
-        if (doc.exists) {
-          return doc.data()
-        } else {
-          return error({
-            statusCode: 404
-          })
-        }
-      })
-    const _postDocumentData = (postDocumentData as any) as PostDocumentData
+      .then((doc) => doc.data() as PostDocumentData | undefined)
+    if (!postDocumentData) return error({ statusCode: 404 })
+
     const post: Post = {
-      title: _postDocumentData.title,
-      userId: _postDocumentData.userId,
-      nodeTree: JSON.parse(_postDocumentData.nodeTree)
+      title: postDocumentData.title,
+      userId: postDocumentData.userId,
+      nodeTree: JSON.parse(postDocumentData.nodeTree)
     }
+
     const user = await app.$firestore
       .collection('users')
       .doc(post.userId)
       .get()
-      .then((doc) => {
-        if (doc.exists) {
-          return doc.data()
-        } else {
-          return error({
-            statusCode: 404
-          })
-        }
-      })
+      .then((doc) => doc.data() as User | undefined)
+    if (!user) return error({ statusCode: 404 })
+
     return {
       post,
       user,
@@ -100,26 +88,39 @@ export default Vue.extend({
   },
   data(): LocalData {
     return {
-      post: null,
-      user: null,
-      currentNodeTree: null
+      post: {
+        userId: '',
+        title: '',
+        nodeTree: {
+          text: '',
+          type: 'RESULT'
+        }
+      },
+      user: {
+        id: '',
+        displayName: '',
+        photoUrl: ''
+      },
+      currentNodeTree: {
+        text: '',
+        type: 'RESULT'
+      }
     }
   },
   methods: {
     handleChoiceClicked(index: number): void {
-      const currentNodeTree = this.currentNodeTree! as NodeTree
-      if (currentNodeTree.type === 'QUESTION') {
-        this.currentNodeTree = currentNodeTree.choiceNodes[index].nodeTree
+      if (this.currentNodeTree.type === 'QUESTION') {
+        this.currentNodeTree = this.currentNodeTree.choiceNodes[index].nodeTree
       }
     },
     handleResetClicked(): void {
-      const post = this.post! as Post
-      this.currentNodeTree = post.nodeTree
+      this.currentNodeTree = this.post.nodeTree
     }
   },
-  head() {
-    const post = this.post! as Post
-    const title = `${post.title} | 診断チャートメーカー`
+  // nuxtのバグっぽい（？）vud.d.tsでthisの型が抜けてる
+  // 本来は head: MetaInfo | (this: V) => MetaInfoであってほしい
+  head(this: LocalData) {
+    const title = `${this.post.title} | 診断チャートメーカー`
     return {
       title,
       meta: [

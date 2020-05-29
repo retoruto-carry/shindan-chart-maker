@@ -5,12 +5,10 @@ export type ChoiceNode = {
   nodeTree: NodeTree
 }
 
-export type ChoiceNodes = ChoiceNode[]
-
 export type QuestionNodeTree = {
   text: string
   type: 'QUESTION'
-  choiceNodes: ChoiceNodes
+  choiceNodes: ChoiceNode[]
 }
 
 export type ResultNodeTree = {
