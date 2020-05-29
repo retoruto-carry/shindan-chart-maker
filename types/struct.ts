@@ -22,6 +22,7 @@ export type User = {
   id: string
   displayName: string
   photoUrl: string
+  username: string
 }
 
 export type Post = {

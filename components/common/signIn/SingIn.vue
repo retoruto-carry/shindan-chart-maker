@@ -19,7 +19,8 @@ export default {
           .doc(result.user.uid)
           .set({
             displayName: result.user.displayName,
-            photoUrl: result.user.photoURL
+            photoUrl: result.user.photoURL.replace('normal', '400x400'),
+            username: result.additionalUserInfo.username
           })
         location.reload()
       }
