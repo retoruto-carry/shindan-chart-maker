@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-center">
     <h1 class="text-xl">{{ post.title }}</h1>
     <p class="text-gray-600 text-sm mt-1 mb-4">作者：{{ user.displayName }}</p>
     <template v-if="currentNodeTree.type === 'QUESTION'">
@@ -95,7 +95,6 @@ export default Vue.extend({
     return {
       title,
       meta: [
-        { name: 'viewport', hid: 'viewport', content: 'width=1024' },
         { property: 'og:title', hid: 'og:title', content: title },
         {
           property: 'og:url',

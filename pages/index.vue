@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-center">
     <h1 class="text-2xl font-bold text-red-600">診断チャートメーカー</h1>
     <h2 class="text-xl font-bold mt-2">診断一覧</h2>
     <PostList :posts="posts" class="mt-2" />
