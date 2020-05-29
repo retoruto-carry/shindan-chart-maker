@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1 class="text-xl mb-4">{{ post.title }}</h1>
+    <h1 class="text-xl">{{ post.title }}</h1>
+    <p class="text-gray-600 text-sm mt-1 mb-4">作者：{{ user.displayName }}</p>
     <template v-if="currentNodeTree.type === 'QUESTION'">
       <p class="text-lg mb-4">{{ currentNodeTree.text }}</p>
       <button
@@ -17,6 +18,7 @@
       </button>
     </template>
     <template v-else>
+      <p class="text-lg">結果</p>
       <p class="text-2xl text-red-500 font-bold mb-4">
         {{ currentNodeTree.text }}
       </p>
