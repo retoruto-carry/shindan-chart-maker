@@ -29,6 +29,7 @@ export type Post = {
   id: string
   title: string
   hashtag: string
+  tags: string[]
   nodeTree: NodeTree
   userId: string
   createdAt: Date
@@ -38,6 +39,7 @@ export type PostDocumentData = {
   id: string
   title: string
   hashtag: string
+  tags: string[]
   userId: string
 }
 
