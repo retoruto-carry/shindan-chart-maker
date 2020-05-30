@@ -28,7 +28,10 @@
           class="shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline py-3 px-4 mb-3 block pl-10 pr-4 py-2"
         />
       </div>
-      <h2 class="text-xl font-semibold mb-4 mt-8">タグ</h2>
+      <h2 class="text-xl font-semibold mt-8">タグ</h2>
+      <p class="text-gray-500 mb-4">
+        サイト内で関連のコンテンツの表示に使います
+      </p>
       <InputTags v-model="tags" />
       <button
         type="submit"
