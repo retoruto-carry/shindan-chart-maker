@@ -162,7 +162,7 @@ export default Vue.extend({
       if (this.nodeTree.type === 'QUESTION') {
         const newResultNodeTree: ResultNodeTree = {
           type: 'RESULT',
-          text: this.nodeTree.text
+          text: this.nodeTree.choiceNodes[index].nodeTree.text
         }
         this.nodeTree.choiceNodes[index].nodeTree = newResultNodeTree
       }

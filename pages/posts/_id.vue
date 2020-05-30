@@ -5,16 +5,12 @@
     <template v-if="currentNodeTree.type === 'QUESTION'">
       <p class="text-lg mb-4 whitespace-pre-wrap">{{ currentNodeTree.text }}</p>
       <button
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-1"
-        @click="handleChoiceClicked(0)"
+        v-for="(choiceNode, index) in currentNodeTree.choiceNodes"
+        :key="index"
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-1 mb-2"
+        @click="handleChoiceClicked(index)"
       >
-        {{ currentNodeTree.choiceNodes[0].label }}
-      </button>
-      <button
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        @click="handleChoiceClicked(1)"
-      >
-        {{ currentNodeTree.choiceNodes[1].label }}
+        {{ choiceNode.label }}
       </button>
     </template>
     <template v-else>
