@@ -18,6 +18,28 @@
         <i class="mdi mdi-sitemap mr-1" />
         フローチャート
       </h2>
+      <AppAccordion title="例を見てみよう" class="mb-8">
+        <p class="text-left text-gray-500">
+          クリックして、テンプレートを下のフローチャートに反映しよう
+        </p>
+        <div class="text-left mt-2">
+          <button
+            v-for="(nodeTreeSample, index) in nodeTreeSamples"
+            :key="index"
+            type="button"
+            class="bg-white hover:bg-gray-200 text-gray-600 text-sm py-2 px-4 border border-gray-400 rounded mb-2 mr-4"
+            @click="handleSetNodeTree(nodeTreeSample.nodeTree)"
+          >
+            {{ nodeTreeSample.title }}
+          </button>
+        </div>
+        <p
+          class="underline text-gray-600 text-left text-sm cursor-pointer"
+          @click="handleResetNodeTree()"
+        >
+          初期状態へリセット
+        </p>
+      </AppAccordion>
       <div class="w-full overflow-scroll bg-gray-300 p-4">
         <QuestionNode :node-tree="nodeTree" />
       </div>
@@ -74,10 +96,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
+
+import AppAccordion from '~/components/common/AppAccordion.vue'
 import InputTags from '~/components/partials/post/InputTags.vue'
 import QuestionNode from '~/components/partials/QuestionNode.vue'
 import SignInButton from '~/components/common/signIn/SignInButton.vue'
-import { NodeTree, TagObj } from '~/types/struct'
+
+import { NodeTree, TagObj, NodeTreeSample } from '~/types/struct'
+import { nodeTreeSamples } from '~/utils/constants/nodeTreeSamples'
+import { defaultNodeTreeData } from '~/utils/constants/defalutNodeTreeData'
 
 type LocalData = {
   nodeTree: NodeTree
@@ -87,32 +114,14 @@ type LocalData = {
   isSubmitting: Boolean
 }
 
-const nodeTreeData: NodeTree = {
-  type: 'QUESTION',
-  text: '',
-  choiceNodes: [
-    {
-      label: '',
-      nodeTree: {
-        type: 'RESULT',
-        text: ''
-      }
-    },
-    {
-      label: '',
-      nodeTree: {
-        type: 'RESULT',
-        text: ''
-      }
-    }
-  ]
-}
+const nodeTreeData: NodeTree = defaultNodeTreeData
 
 export default Vue.extend({
   components: {
     QuestionNode,
     SignInButton,
-    InputTags
+    InputTags,
+    AppAccordion
   },
   data(): LocalData {
     return {
@@ -121,6 +130,11 @@ export default Vue.extend({
       hashtag: '',
       tags: [],
       isSubmitting: false
+    }
+  },
+  computed: {
+    nodeTreeSamples(): NodeTreeSample[] {
+      return nodeTreeSamples
     }
   },
   methods: {
@@ -161,6 +175,12 @@ export default Vue.extend({
         .then((ref) => {
           this.$router.push(`/posts/${ref.id}`)
         })
+    },
+    handleSetNodeTree(nodeTree: NodeTree) {
+      this.nodeTree = nodeTree
+    },
+    handleResetNodeTree() {
+      this.nodeTree = defaultNodeTreeData
     }
   }
 })

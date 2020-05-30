@@ -41,7 +41,13 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    [
+      '@nuxtjs/google-analytics',
+      {
+        id: 'UA-55008158-13'
+      }
+    ]
   ],
   /*
    ** Nuxt.js modules
