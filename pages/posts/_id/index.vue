@@ -78,17 +78,22 @@ export default Vue.extend({
         .collection('users')
         .doc(post.userId)
         .get()
-      const relatedPostDocuments = await app.$firestore
-        .collection('posts')
-        .where('tags', 'array-contains-any', post.tags)
-        .get()
-      const relatedPosts = relatedPostDocuments.docs
-        .map(
-          (postDocument): Post => {
-            return toPost(postDocument)
-          }
-        )
-        .filter((p: Post) => p.id !== post.id)
+      let relatedPosts: Post[]
+      if (post.tags.length) {
+        const relatedPostDocuments = await app.$firestore
+          .collection('posts')
+          .where('tags', 'array-contains-any', post.tags)
+          .get()
+        relatedPosts = relatedPostDocuments.docs
+          .map(
+            (postDocument): Post => {
+              return toPost(postDocument)
+            }
+          )
+          .filter((p: Post) => p.id !== post.id)
+      } else {
+        relatedPosts = []
+      }
       return {
         post,
         relatedPosts,
