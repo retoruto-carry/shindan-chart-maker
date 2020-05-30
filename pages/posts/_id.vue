@@ -110,7 +110,7 @@ export default Vue.extend({
         encodeURIComponent(`${process.env.BASE_URL}/posts/${post.id}`) +
         '&text=' +
         encodeURIComponent(
-          `【結果】\r\n${currentNodeTree.text}\r\n\r\n#${post.hashtag}\r\n${post.title} - 診断チャートメーカー`
+          `【結果】\r\n${currentNodeTree.text}\r\n\r\n「${post.title}」で遊びました\r\n#${post.hashtag} #診断チャートメーカー`
         )
       window.open(tweet)
     }
