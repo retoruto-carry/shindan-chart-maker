@@ -35,10 +35,7 @@ export default Vue.extend({
           .doc(result.user.uid)
           .set({
             displayName: result.user.displayName,
-            photoUrl: (result.user.photoURL as string).replace(
-              'normal',
-              '400x400'
-            ),
+            photoUrl: result.user.photoURL as string,
             username: (result.additionalUserInfo as firebase.auth.AdditionalUserInfo)
               .username
           })
