@@ -31,7 +31,7 @@ export default {
    */
   plugins: [
     '~/plugins/firebase.ts',
-    { src: '~/plugins/vue-tags-input.ts', mode: 'client' }
+    { src: '~/plugins/vue-tags-input.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
