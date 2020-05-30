@@ -29,7 +29,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/firebase.ts'],
+  plugins: [
+    '~/plugins/firebase.ts',
+    { src: '~/plugins/vue-tags-input.ts', mode: 'client' }
+  ],
   /*
    ** Nuxt.js dev-modules
    */

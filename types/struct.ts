@@ -40,3 +40,7 @@ export type PostDocumentData = {
   hashtag: string
   userId: string
 }
+
+export type TagObj = {
+  text: string
+}
