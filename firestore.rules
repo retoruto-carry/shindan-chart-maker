@@ -1,0 +1,62 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read;
+    }
+
+    match /users {
+      match /{userId} {
+        allow write:if true
+          && request.auth.uid == userId
+          && validateString(incomingData().displayName, 0, 512)
+          && validateString(incomingData().photoUrl, 0, 512)
+          && validateString(incomingData().username, 0, 512)
+        ;
+      }
+    }
+
+    match /posts {
+      match /{postId} {
+        allow create: if true
+          && request.auth.uid == incomingData().userId
+          && validateString(incomingData().title, 0, 512)
+          && validateString(incomingData().hashtag, 0, 140)
+          && validateString(incomingData().nodeTree, 0, 16384)
+        ;
+        allow update: if true
+          && request.auth.uid == existingData().userId
+          && request.auth.uid == incomingData().userId
+          && validateString(incomingData().title, 0, 512)
+          && validateString(incomingData().nodeTree, 0, 16384)
+        allow delete: if request.auth.uid == existingData().userId
+        ;
+      }
+    }
+
+    match /tags {
+      match /{tagId} {
+        allow write: if true
+          && isUserAuthenticated()
+          && validateString(incomingData().text, 0, 512)
+      }
+    }
+  }
+
+  function incomingData() {
+    return request.resource.data;
+  }
+
+  function existingData() {
+    return resource.data;
+  }
+
+  function validateString(text, min, max) {
+    return text is string && min <= text.size() && text.size() <= max;
+  }
+
+  function isUserAuthenticated() {
+		return request.auth != null;
+	}
+}
