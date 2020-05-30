@@ -83,7 +83,7 @@ const sample2: NodeTreeSample = {
   nodeTree: sampleNodeTree2
 }
 
-const sampleNodeTree3 = {
+const sampleNodeTree3: NodeTree = {
   type: 'QUESTION',
   text: '無人島に持っていくなら？',
   choiceNodes: [
