@@ -11,7 +11,7 @@ type QuestionNodeTree = {
   choiceNodes: ChoiceNode[]
 }
 
-type ResultNodeTree = {
+export type ResultNodeTree = {
   text: string
   type: 'RESULT'
 }

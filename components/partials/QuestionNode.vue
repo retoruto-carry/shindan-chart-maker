@@ -17,7 +17,7 @@
             {{ displayNodeType(nodeTree.type) }}
           </span>
           <button
-            v-if="nodeTree.type === 'QUESTION'"
+            v-show="isShowDeleteButton"
             type="button"
             class="absolute right-0 mr-2 text-white"
             @click="handleDeleteClicked"
@@ -47,14 +47,6 @@
             :placeholder="`選択肢${index + 1}を入力`"
           />
         </div>
-        <button
-          v-show="nodeTree.choiceNodes.length > 1"
-          type="button"
-          class="text-sm bg-gray-200 border border-gray-300 hover:text-white hover:bg-gray-500"
-          @click="handleMinusChoice"
-        >
-          <i class="mdi mdi-minus p-1" />
-        </button>
         <button
           type="button"
           class="text-sm bg-gray-200 border border-gray-300 hover:text-white hover:bg-gray-500 rounded-br"
@@ -96,7 +88,13 @@
             choiceNode.label === '' ? `選択肢${index + 1}` : choiceNode.label
           }}
         </div>
-        <QuestionNode :node-tree="choiceNode.nodeTree" class="node relative" />
+        <QuestionNode
+          :node-tree="choiceNode.nodeTree"
+          :parent-own-node-length="nodeTree.choiceNodes.length"
+          class="node relative"
+          @deleteResultNode="handleDeleteNode(index)"
+          @convertToResultNode="handleConvertToResultNode(index)"
+        />
       </div>
     </div>
   </div>
@@ -104,7 +102,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { NodeTree, NodeType } from '~/types/struct'
+import { NodeTree, NodeType, ResultNodeTree } from '~/types/struct'
 
 export default Vue.extend({
   name: 'QuestionNode',
@@ -112,6 +110,11 @@ export default Vue.extend({
     nodeTree: {
       type: Object as PropType<NodeTree>,
       required: true
+    },
+    parentOwnNodeLength: {
+      type: Number,
+      required: false,
+      default: 1
     }
   },
   computed: {
@@ -123,6 +126,11 @@ export default Vue.extend({
       } else {
         return '16rem'
       }
+    },
+    isShowDeleteButton(): boolean {
+      return !(
+        this.nodeTree.type === 'RESULT' && this.parentOwnNodeLength === 1
+      )
     }
   },
   methods: {
@@ -145,9 +153,27 @@ export default Vue.extend({
         }
       ])
     },
+    handleDeleteNode(index: number) {
+      if (this.nodeTree.type === 'QUESTION') {
+        this.nodeTree.choiceNodes.splice(index, 1)
+      }
+    },
+    handleConvertToResultNode(index: number) {
+      if (this.nodeTree.type === 'QUESTION') {
+        const newResultNodeTree: ResultNodeTree = {
+          type: 'RESULT',
+          text: this.nodeTree.text
+        }
+        this.nodeTree.choiceNodes[index].nodeTree = newResultNodeTree
+      }
+    },
     handleDeleteClicked() {
-      this.nodeTree.type = 'RESULT'
-      this.$delete(this.nodeTree, 'choiceNodes')
+      switch (this.nodeTree.type) {
+        case 'RESULT':
+          return this.$emit('deleteResultNode')
+        case 'QUESTION':
+          return this.$emit('convertToResultNode')
+      }
     },
     handleAddChoice() {
       if (this.nodeTree.type === 'QUESTION') {
@@ -158,14 +184,6 @@ export default Vue.extend({
             text: ''
           }
         })
-      }
-    },
-    handleMinusChoice() {
-      if (
-        this.nodeTree.type === 'QUESTION' &&
-        this.nodeTree.choiceNodes.length > 1
-      ) {
-        this.nodeTree.choiceNodes.pop()
       }
     },
     displayNodeType(type: NodeType): string {
