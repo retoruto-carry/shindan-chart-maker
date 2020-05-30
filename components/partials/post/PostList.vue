@@ -5,6 +5,14 @@
         <nuxt-link :to="`/posts/${post.id}`" class="text-red-600 underline">
           {{ post.title }}
         </nuxt-link>
+        <nuxt-link
+          v-show="post.userId === $auth.currentUser.uid"
+          :to="`/posts/${post.id}/edit`"
+          class="text-gray-600 underline ml-4 text-sm"
+        >
+          <i class="mdi mdi-pencil" />
+          編集
+        </nuxt-link>
       </li>
     </ul>
   </div>

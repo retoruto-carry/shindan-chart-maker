@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { DocumentNotExistError } from '../../types/error'
+import { DocumentNotExistError } from '~/types/error'
 import { NodeTree, User, Post } from '~/types/struct'
 import { toUser, toPost } from '~/utils/transformer/toObject'
 import PostList from '~/components/partials/post/PostList.vue'

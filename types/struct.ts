@@ -40,6 +40,13 @@ export type Post = {
   createdAt: Date
 }
 
+export type PostFormData = {
+  title: string
+  hashtag: string
+  tags: TagObj[]
+  nodeTree: NodeTree
+}
+
 export type PostDocumentData = {
   id: string
   title: string
