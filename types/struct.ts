@@ -18,6 +18,11 @@ export type ResultNodeTree = {
 
 export type NodeTree = QuestionNodeTree | ResultNodeTree
 
+export type NodeTreeSample = {
+  title: string
+  nodeTree: NodeTree
+}
+
 export type User = {
   id: string
   displayName: string
