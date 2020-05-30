@@ -6,7 +6,7 @@
           {{ post.title }}
         </nuxt-link>
         <nuxt-link
-          v-show="post.userId === $auth.currentUser.uid"
+          v-show="$auth.currentUser && post.userId === $auth.currentUser.uid"
           :to="`/posts/${post.id}/edit`"
           class="text-gray-600 underline ml-4 text-sm"
         >
