@@ -21,6 +21,13 @@
               <i class="mdi mdi-home mr-1" />
               診断を作成
             </nuxt-link>
+            <nuxt-link
+              :to="`/users/${$auth.currentUser.uid}/posts`"
+              class="block px-4 py-2 text-gray-800 hover:bg-gray-300 hover:text-gray-900"
+            >
+              <i class="mdi mdi-account mr-1" />
+              マイページ
+            </nuxt-link>
             <a
               class="block px-4 py-2 text-gray-800 hover:bg-gray-300 hover:text-gray-900"
               @click="signOut"
