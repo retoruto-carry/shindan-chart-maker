@@ -15,7 +15,7 @@
       <div class="w-full overflow-scroll bg-gray-300 p-4">
         <QuestionNode :node-tree="nodeTree" />
       </div>
-      <h2 class="text-xl font-semibold mb-4 mt-8">タグ</h2>
+      <h2 class="text-xl font-semibold mb-4 mt-8">ツイッターのタグ</h2>
       <div class="relative">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3">
           <i class="mdi mdi-pound" />
@@ -24,10 +24,12 @@
           v-model="hashtag"
           maxlength="50"
           required
-          placeholder="ツイッターのタグになります（空白不可）"
+          placeholder="空白不可・_以外の記号不可"
           class="shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline py-3 px-4 mb-3 block pl-10 pr-4 py-2"
         />
       </div>
+      <h2 class="text-xl font-semibold mb-4 mt-8">タグ</h2>
+      <InputTags v-model="tags" />
       <button
         type="submit"
         class="mt-12 bg-red-500 hover:bg-red-700 text-white font-bold h-12 w-48 rounded-full"
@@ -57,14 +59,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import InputTags from '~/components/partials/post/InputTags.vue'
 import QuestionNode from '~/components/partials/QuestionNode.vue'
 import SignInButton from '~/components/common/signIn/SignInButton.vue'
-import { NodeTree } from '~/types/struct'
+import { NodeTree, TagObj } from '~/types/struct'
 
 type LocalData = {
   nodeTree: NodeTree
   title: string
   hashtag: string
+  tags: TagObj[]
   isSubmitting: Boolean
 }
 
@@ -92,19 +96,41 @@ const nodeTreeData: NodeTree = {
 export default Vue.extend({
   components: {
     QuestionNode,
-    SignInButton
+    SignInButton,
+    InputTags
   },
   data(): LocalData {
     return {
       nodeTree: nodeTreeData,
       title: '',
       hashtag: '',
+      tags: [],
       isSubmitting: false
     }
   },
   methods: {
-    submitPost() {
+    async submitPost() {
       this.isSubmitting = true
+
+      this.tags = this.tags.map(
+        (tag: TagObj): TagObj => {
+          return {
+            text: tag.text.replace(/^#/, '')
+          }
+        }
+      )
+
+      await Promise.all(
+        this.tags.map(async (tag: TagObj) => {
+          await this.$firestore
+            .collection('tags')
+            .doc(tag.text)
+            .set({
+              text: tag.text
+            })
+        })
+      )
+
       this.$firestore
         .collection('posts')
         .add({
@@ -112,6 +138,9 @@ export default Vue.extend({
           nodeTree: JSON.stringify(this.nodeTree),
           userId: this.$auth.currentUser.uid,
           hashtag: this.hashtag,
+          tags: this.tags.map((tag: TagObj): string => {
+            return tag.text
+          }),
           createdAt: this.$firebase.firestore.FieldValue.serverTimestamp()
         })
         .then((ref) => {

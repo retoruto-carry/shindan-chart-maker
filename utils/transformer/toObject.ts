@@ -1,5 +1,5 @@
 import { firebase } from '../externals/firebase'
-import { User, Post, PostDocumentData } from '../../types/struct'
+import { User, Post, PostDocumentData, TagObj } from '../../types/struct'
 import { DocumentNotExistError } from '../../types/error'
 
 type Document = firebase.firestore.DocumentSnapshot<
@@ -25,5 +25,13 @@ export function toPost(doc: Document): Post {
     ...toObject<PostDocumentData>(doc),
     createdAt: _doc.data().createdAt.toDate(),
     nodeTree: JSON.parse(_doc.data().nodeTree)
+  }
+}
+
+export function toTagObj(doc: Document): TagObj {
+  if (!doc.exists) throw new DocumentNotExistError()
+  const _doc: any = doc
+  return {
+    text: _doc.data().text
   }
 }

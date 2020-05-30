@@ -36,6 +36,11 @@
 
     <ButtonPostCreate class="mt-24" />
 
+    <template v-if="relatedPosts.length">
+      <h2 class="text-xl font-bold mt-12">関連一覧</h2>
+      <PostList :posts="relatedPosts" class="mt-2" />
+    </template>
+
     <PostListRecent class="mt-12" />
   </div>
 </template>
@@ -45,19 +50,22 @@ import Vue from 'vue'
 import { DocumentNotExistError } from '../../types/error'
 import { NodeTree, User, Post } from '~/types/struct'
 import { toUser, toPost } from '~/utils/transformer/toObject'
+import PostList from '~/components/partials/post/PostList.vue'
 import PostListRecent from '~/components/partials/post/PostListRecent.vue'
 import ButtonPostCreate from '~/components/partials/ButtonPostCreate.vue'
 
 type LocalData = {
   post: Post | null
   user: User | null
+  relatedPosts: Post[]
   currentNodeTree: NodeTree | null
 }
 
 export default Vue.extend({
   components: {
     PostListRecent,
-    ButtonPostCreate
+    ButtonPostCreate,
+    PostList
   },
   async asyncData({ app, params: { id }, error }) {
     try {
@@ -70,8 +78,20 @@ export default Vue.extend({
         .collection('users')
         .doc(post.userId)
         .get()
+      const relatedPostDocuments = await app.$firestore
+        .collection('posts')
+        .where('tags', 'array-contains-any', post.tags)
+        .get()
+      const relatedPosts = relatedPostDocuments.docs
+        .map(
+          (postDocument): Post => {
+            return toPost(postDocument)
+          }
+        )
+        .filter((p: Post) => p.id !== post.id)
       return {
         post,
+        relatedPosts,
         user: toUser(userDocument),
         currentNodeTree: post.nodeTree
       }
@@ -87,6 +107,7 @@ export default Vue.extend({
   data(): LocalData {
     return {
       post: null,
+      relatedPosts: [],
       user: null,
       currentNodeTree: null
     }
