@@ -79,6 +79,7 @@
     />
     <button
       type="submit"
+      :disabled="isSubmitting"
       class="mt-12 bg-red-500 hover:bg-red-700 text-white font-bold h-12 w-48 rounded-full"
     >
       <span v-if="!isSubmitting">
