@@ -3,7 +3,18 @@
     <div class="border border-gray-400 rounded py-8 px-4">
       <h1 class="text-3xl mb-2">{{ post.title }}</h1>
       <p class="text-gray-800 mb-2">{{ post.subtitle }}</p>
-      <p class="text-gray-600 text-sm">作者：{{ user.displayName }}</p>
+      <p class="text-gray-600 text-sm">
+        作者：<nuxt-link :to="`/users/${user.id}/posts`" class="underline">
+          {{ user.displayName }}
+        </nuxt-link>
+        <a
+          :href="`https://twitter.com/${user.username}`"
+          target="__blank"
+          class="text-blue-500 ml-1"
+        >
+          <i class="mdi mdi-twitter " />
+        </a>
+      </p>
       <button
         v-if="$auth.currentUser && post.userId === $auth.currentUser.uid"
         class="block mx-auto bg-transparent hover:bg-gray-600 text-gray-600 text-xs hover:text-white py-1 px-4 border border-gray-600 hover:border-transparent rounded mt-4"
