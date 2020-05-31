@@ -85,6 +85,7 @@ export default Vue.extend({
         .doc((this.post as Post).id)
         .set({
           title: this.postFormData.title,
+          subtitle: this.postFormData.subtitle,
           nodeTree: JSON.stringify(this.postFormData.nodeTree),
           userId: this.$auth.currentUser.uid,
           hashtag: this.postFormData.hashtag,

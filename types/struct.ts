@@ -33,6 +33,7 @@ export type User = {
 export type Post = {
   id: string
   title: string
+  subtitle: string
   hashtag: string
   tags: string[]
   nodeTree: NodeTree
@@ -42,6 +43,7 @@ export type Post = {
 
 export type PostFormData = {
   title: string
+  subtitle: string
   hashtag: string
   tags: TagObj[]
   nodeTree: NodeTree
@@ -50,6 +52,7 @@ export type PostFormData = {
 export type PostDocumentData = {
   id: string
   title: string
+  subtitle: string
   hashtag: string
   tags: string[]
   userId: string

@@ -45,6 +45,7 @@ export function toTagObj(doc: Document): TagObj {
 export function toPostFormData(post: Post): PostFormData {
   return {
     title: post.title,
+    subtitle: post.subtitle,
     hashtag: post.hashtag,
     tags: post.tags.map((t) => {
       return {

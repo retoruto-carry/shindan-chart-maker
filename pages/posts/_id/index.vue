@@ -1,11 +1,12 @@
 <template>
   <div class="text-center">
     <div class="border border-gray-400 rounded py-8 px-4">
-      <h1 class="text-3xl">{{ post.title }}</h1>
-      <p class="text-gray-600 text-sm mb-2">作者：{{ user.displayName }}</p>
+      <h1 class="text-3xl mb-2">{{ post.title }}</h1>
+      <p class="text-gray-800 mb-2">{{ post.subtitle }}</p>
+      <p class="text-gray-600 text-sm">作者：{{ user.displayName }}</p>
       <button
         v-if="$auth.currentUser && post.userId === $auth.currentUser.uid"
-        class="block mx-auto bg-transparent hover:bg-gray-600 text-gray-600 text-xs hover:text-white py-1 px-4 border border-gray-600 hover:border-transparent rounded"
+        class="block mx-auto bg-transparent hover:bg-gray-600 text-gray-600 text-xs hover:text-white py-1 px-4 border border-gray-600 hover:border-transparent rounded mt-4"
         @click="$router.push(`/posts/${post.id}/edit`)"
       >
         <i class="mdi mdi-pencil" />

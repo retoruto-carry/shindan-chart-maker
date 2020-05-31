@@ -16,7 +16,7 @@
                 {{ post.title }}
               </p>
               <p class="text-sm text-gray-600 truncate">
-                テストの説明ですテストの説明ですテストの説明ですテストの説明ですテストの説明ですテストの説明です
+                {{ post.subtitle }}
               </p>
             </div>
           </nuxt-link>
@@ -25,7 +25,7 @@
           >
             <nuxt-link :to="`/posts/${post.id}/edit`">
               <div
-                class="border bg-white px-4 py-1 mb-4 max-w-xl text-left mx-auto hover:bg-gray-200 hover:shadow rounded-b"
+                class="border-b border-r border-l bg-white px-4 py-1 mb-4 max-w-xl text-left mx-auto hover:bg-gray-200 hover:shadow rounded-b"
               >
                 <p class="text-xs text-gray-600">
                   <i class="mdi mdi-pencil" />
