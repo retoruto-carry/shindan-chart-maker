@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <h1 class="text-3xl font-bold text-red-600">診断チャートメーカー</h1>
+    <h1 class="text-3xl font-bold text-gray-900">診断チャートメーカー</h1>
     <ButtonPostCreate class="mt-8" />
     <h2 class="text-xl font-bold mt-12">新着一覧</h2>
     <PostList :posts="posts" class="mt-2" />

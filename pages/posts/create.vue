@@ -44,6 +44,7 @@ export default Vue.extend({
     return {
       postFormData: {
         title: '',
+        subtitle: '',
         hashtag: '',
         tags: [],
         nodeTree: defaultNodeTreeData
@@ -80,6 +81,7 @@ export default Vue.extend({
         .collection('posts')
         .add({
           title: this.postFormData.title,
+          subtitle: this.postFormData.subtitle,
           nodeTree: JSON.stringify(this.postFormData.nodeTree),
           userId: this.$auth.currentUser.uid,
           hashtag: this.postFormData.hashtag,

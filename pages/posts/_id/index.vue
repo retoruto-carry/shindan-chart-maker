@@ -1,40 +1,48 @@
 <template>
   <div class="text-center">
-    <h1 class="text-xl">{{ post.title }}</h1>
-    <p class="text-gray-600 text-sm mt-1 mb-4">作者：{{ user.displayName }}</p>
-    <template v-if="currentNodeTree.type === 'QUESTION'">
-      <p class="text-lg mb-4 whitespace-pre-wrap">{{ currentNodeTree.text }}</p>
-      <button
-        v-for="(choiceNode, index) in currentNodeTree.choiceNodes"
-        :key="index"
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-1 mb-2"
-        @click="handleChoiceClicked(index)"
-      >
-        {{ choiceNode.label }}
-      </button>
-    </template>
-    <template v-else>
-      <p class="text-lg mb-2">結果</p>
-      <p class="text-2xl text-red-500 font-bold mb-8">
-        <span class="whitespace-pre-wrap">{{ currentNodeTree.text }}</span>
+    <div class="border border-gray-400 rounded py-8 px-4">
+      <h1 class="text-3xl mb-2">{{ post.title }}</h1>
+      <p class="text-gray-800 mb-2">{{ post.subtitle }}</p>
+      <p class="text-gray-600 text-sm">
+        作者：<nuxt-link :to="`/users/${user.id}/posts`" class="underline">
+          {{ user.displayName }}
+        </nuxt-link>
+        <a
+          :href="`https://twitter.com/${user.username}`"
+          target="__blank"
+          class="text-blue-500 ml-1"
+        >
+          <i class="mdi mdi-twitter " />
+        </a>
       </p>
       <button
-        class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto mb-2"
-        @click="handleTweetResultClicked"
+        v-if="$auth.currentUser && post.userId === $auth.currentUser.uid"
+        class="block mx-auto bg-transparent hover:bg-gray-600 text-gray-600 text-xs hover:text-white py-1 px-4 border border-gray-600 hover:border-transparent rounded mt-4"
+        @click="$router.push(`/posts/${post.id}/edit`)"
       >
-        <i class="mdi mdi-twitter mr-1" />
-        結果をツイート
+        <i class="mdi mdi-pencil" />
+        この診断を編集
       </button>
-      <button
-        class="block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mx-auto"
-        @click="handleResetClicked"
-      >
-        <i class="mdi mdi-refresh mr-1" />
-        最初から
-      </button>
-    </template>
 
-    <ButtonPostCreate class="mt-24" />
+      <div v-show="!isPlaying" class="mt-8">
+        <button
+          class="text-2xl bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded-full mr-1 mb-2"
+          @click="handleStartClicked()"
+        >
+          診断スタート
+        </button>
+        <button
+          class="block text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mx-auto mt-8"
+          @click="handleTweetPostClicked()"
+        >
+          <i class="mdi mdi-twitter mr-1" />
+          ツイート
+        </button>
+      </div>
+      <PostPlay v-show="isPlaying" :post="post" class="mt-8" />
+    </div>
+
+    <ButtonPostCreate class="mt-12" />
 
     <template v-if="relatedPosts.length">
       <h2 class="text-xl font-bold mt-12">関連一覧</h2>
@@ -48,9 +56,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import { DocumentNotExistError } from '~/types/error'
-import { NodeTree, User, Post } from '~/types/struct'
+import { User, Post } from '~/types/struct'
 import { toUser, toPost } from '~/utils/transformer/toObject'
 import PostList from '~/components/partials/post/PostList.vue'
+import PostPlay from '~/components/partials/post/PostPlay.vue'
 import PostListRecent from '~/components/partials/post/PostListRecent.vue'
 import ButtonPostCreate from '~/components/partials/ButtonPostCreate.vue'
 
@@ -58,14 +67,15 @@ type LocalData = {
   post: Post | null
   user: User | null
   relatedPosts: Post[]
-  currentNodeTree: NodeTree | null
+  isPlaying: Boolean
 }
 
 export default Vue.extend({
   components: {
     PostListRecent,
     ButtonPostCreate,
-    PostList
+    PostList,
+    PostPlay
   },
   async asyncData({ app, params: { id }, error }) {
     try {
@@ -114,29 +124,21 @@ export default Vue.extend({
       post: null,
       relatedPosts: [],
       user: null,
-      currentNodeTree: null
+      isPlaying: false
     }
   },
   methods: {
-    handleChoiceClicked(index: number): void {
-      const currentNodeTree = this.currentNodeTree! as NodeTree
-      if (currentNodeTree.type === 'QUESTION') {
-        this.currentNodeTree = currentNodeTree.choiceNodes[index].nodeTree
-      }
+    handleStartClicked(): void {
+      this.isPlaying = true
     },
-    handleResetClicked(): void {
-      const post = this.post! as Post
-      this.currentNodeTree = post.nodeTree
-    },
-    handleTweetResultClicked(): void {
-      const currentNodeTree = this.currentNodeTree! as NodeTree
+    handleTweetPostClicked(): void {
       const post = this.post! as Post
       const tweet: string =
         'https://twitter.com/intent/tweet?url=' +
         encodeURIComponent(`${process.env.BASE_URL}/posts/${post.id}`) +
         '&text=' +
         encodeURIComponent(
-          `【結果】\r\n${currentNodeTree.text}\r\n\r\n「${post.title}」で遊びました\r\n#${post.hashtag} #診断チャートメーカー`
+          `${post.title}\r\n#${post.hashtag} #診断チャートメーカー`
         )
       window.open(tweet)
     }

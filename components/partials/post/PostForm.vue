@@ -61,12 +61,25 @@
       <i class="mdi mdi-tag mr-1" />
       タグ
     </h2>
-    <p class="text-gray-500 mb-4">
+    <p class="text-gray-500 mb-8">
       サイト内で関連のコンテンツの表示に使います
     </p>
     <InputTags v-model="postFormData.tags" />
+    <h2 class="text-xl font-semibold mt-8 mb-4">
+      <i class="mdi mdi-format-title mr-1" />
+      ひとこと説明
+    </h2>
+    <input
+      v-model="postFormData.subtitle"
+      required
+      class="shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline py-2 px-3 "
+      type="text"
+      placeholder="ひとこと説明を入力"
+      maxlength="100"
+    />
     <button
       type="submit"
+      :disabled="isSubmitting"
       class="mt-12 bg-red-500 hover:bg-red-700 text-white font-bold h-12 w-48 rounded-full"
     >
       <span v-if="!isSubmitting">

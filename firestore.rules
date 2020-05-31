@@ -22,6 +22,7 @@ service cloud.firestore {
         allow create: if true
           && request.auth.uid == incomingData().userId
           && validateString(incomingData().title, 0, 512)
+          && validateString(incomingData().subtitle, 0, 512)
           && validateString(incomingData().hashtag, 0, 140)
           && validateString(incomingData().nodeTree, 0, 16384)
         ;
@@ -29,7 +30,9 @@ service cloud.firestore {
           && request.auth.uid == existingData().userId
           && request.auth.uid == incomingData().userId
           && validateString(incomingData().title, 0, 512)
+          && validateString(incomingData().subtitle, 0, 512)
           && validateString(incomingData().nodeTree, 0, 16384)
+          && incomingData().createdAt == existingData().createdAt
         allow delete: if request.auth.uid == existingData().userId
         ;
       }
