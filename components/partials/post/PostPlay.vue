@@ -9,7 +9,7 @@
       <button
         v-for="(choiceNode, index) in currentNodeTree.choiceNodes"
         :key="index"
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2 mb-4"
+        class="bg-red-500 hover:bg-red-700 text-lg text-white font-bold py-2 px-4 rounded mx-2 mb-4"
         @click="handleChoiceClicked(index)"
       >
         {{ choiceNode.label }}

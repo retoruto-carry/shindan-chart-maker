@@ -1,15 +1,19 @@
 <template>
   <header>
-    <div class="bg-red-700">
+    <div
+      class="bg-white shadow border-b border-gray-200 h-16 flex items-center"
+    >
       <div
-        class="mx-auto max-w-screen-lg flex items-center justify-between px-4 py-1 h-12"
+        class="mx-auto w-full max-w-screen-lg flex items-center justify-between px-4 py-2"
       >
         <nuxt-link to="/">
-          <span class="text-white font-bold">診断チャートメーカー</span>
+          <span class="text-gray-900 font-bold text-lg"
+            >診断チャートメーカー</span
+          >
         </nuxt-link>
         <client-only>
           <div class="flex items-center">
-            <nuxt-link to="/posts/create" class="text-white align-middle mr-4">
+            <nuxt-link to="/posts/create" class="align-middle text-gray-700">
               <i class="mdi mdi-pencil" />
               <span class="hidden md:inline">作成</span>
             </nuxt-link>

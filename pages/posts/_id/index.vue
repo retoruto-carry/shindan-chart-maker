@@ -1,26 +1,28 @@
 <template>
   <div class="text-center">
-    <h1 class="text-3xl">{{ post.title }}</h1>
-    <p class="text-gray-600 text-sm mt-1 mb-8">作者：{{ user.displayName }}</p>
+    <div class="border border-gray-400 rounded py-8 px-4">
+      <h1 class="text-3xl">{{ post.title }}</h1>
+      <p class="text-gray-600 text-sm mb-8">作者：{{ user.displayName }}</p>
 
-    <div v-show="!isPlaying">
-      <button
-        class="text-2xl bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-1 mb-2"
-        @click="handleStartClicked()"
-      >
-        診断スタート
-      </button>
-      <button
-        class="block text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mx-auto mt-8"
-        @click="handleTweetPostClicked()"
-      >
-        <i class="mdi mdi-twitter mr-1" />
-        ツイート
-      </button>
+      <div v-show="!isPlaying">
+        <button
+          class="text-2xl bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded-full mr-1 mb-2"
+          @click="handleStartClicked()"
+        >
+          診断スタート
+        </button>
+        <button
+          class="block text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mx-auto mt-8"
+          @click="handleTweetPostClicked()"
+        >
+          <i class="mdi mdi-twitter mr-1" />
+          ツイート
+        </button>
+      </div>
+      <PostPlay v-show="isPlaying" :post="post" />
     </div>
-    <PostPlay v-show="isPlaying" :post="post" />
 
-    <ButtonPostCreate class="mt-24" />
+    <ButtonPostCreate class="mt-12" />
 
     <template v-if="relatedPosts.length">
       <h2 class="text-xl font-bold mt-12">関連一覧</h2>
