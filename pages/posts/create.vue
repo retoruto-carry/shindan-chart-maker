@@ -44,6 +44,7 @@ export default Vue.extend({
     return {
       postFormData: {
         title: '',
+        subtitle: '',
         hashtag: '',
         tags: [],
         nodeTree: defaultNodeTreeData
