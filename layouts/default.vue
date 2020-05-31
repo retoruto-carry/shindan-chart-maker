@@ -1,7 +1,7 @@
 <template>
   <div>
     <AppNavbar />
-    <div class="container max-w-screen-lg mx-auto px-4 mt-12">
+    <div class="container max-w-screen-lg mx-auto px-4 mt-24">
       <nuxt />
     </div>
     <TheFooter class="mt-24" />

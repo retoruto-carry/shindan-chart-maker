@@ -2,27 +2,39 @@
   <div>
     <ul>
       <li v-for="post in posts" :key="post.id">
-        <nuxt-link :to="`/posts/${post.id}`">
+        <div class="mb-4">
+          <nuxt-link :to="`/posts/${post.id}`">
+            <div
+              class="border bg-white p-4 max-w-xl text-left mx-auto hover:bg-gray-200 hover:shadow"
+              :class="[
+                $auth.currentUser && post.userId === $auth.currentUser.uid
+                  ? 'rounded-t'
+                  : 'rounded'
+              ]"
+            >
+              <p class="font-bold text-gray-700">
+                {{ post.title }}
+              </p>
+              <p class="text-sm text-gray-600 truncate">
+                テストの説明ですテストの説明ですテストの説明ですテストの説明ですテストの説明ですテストの説明です
+              </p>
+            </div>
+          </nuxt-link>
           <div
-            class="border bg-white text-gray-900 p-4 mb-4 max-w-xl hover:bg-gray-200 hover:shadow text-left mx-auto"
+            v-if="$auth.currentUser && post.userId === $auth.currentUser.uid"
           >
-            <p class="font-bold text-gray-700">
-              {{ post.title }}
-            </p>
-            <p class="text-sm text-gray-600 truncate">
-              テストの説明ですテストの説明ですテストの説明ですテストの説明ですテストの説明ですテストの説明です
-            </p>
+            <nuxt-link :to="`/posts/${post.id}/edit`">
+              <div
+                class="border bg-white px-4 py-1 mb-4 max-w-xl text-left mx-auto hover:bg-gray-200 hover:shadow rounded-b"
+              >
+                <p class="text-xs text-gray-600">
+                  <i class="mdi mdi-pencil" />
+                  編集
+                </p>
+              </div>
+            </nuxt-link>
           </div>
-        </nuxt-link>
-        <!--
-        <nuxt-link
-          v-show="$auth.currentUser && post.userId === $auth.currentUser.uid"
-          :to="`/posts/${post.id}/edit`"
-          class="text-gray-600 underline ml-4 text-sm"
-        >
-          <i class="mdi mdi-pencil" />
-          編集
-        -->
+        </div>
       </li>
     </ul>
   </div>
@@ -39,7 +51,6 @@ export default Vue.extend({
       type: Array as PropType<Post[]>,
       required: true
     }
-  },
-  methods: {}
+  }
 })
 </script>

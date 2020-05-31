@@ -1,7 +1,7 @@
 <template>
   <header>
     <div
-      class="bg-white shadow border-b border-gray-200 h-16 flex items-center"
+      class="bg-white shadow border-b border-gray-200 h-16 flex items-center fixed top-0 inset-x-0 z-100"
     >
       <div
         class="mx-auto w-full max-w-screen-lg flex items-center justify-between px-4 py-2"

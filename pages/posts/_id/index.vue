@@ -2,9 +2,17 @@
   <div class="text-center">
     <div class="border border-gray-400 rounded py-8 px-4">
       <h1 class="text-3xl">{{ post.title }}</h1>
-      <p class="text-gray-600 text-sm mb-8">作者：{{ user.displayName }}</p>
+      <p class="text-gray-600 text-sm mb-2">作者：{{ user.displayName }}</p>
+      <button
+        v-if="$auth.currentUser && post.userId === $auth.currentUser.uid"
+        class="block mx-auto bg-transparent hover:bg-gray-600 text-gray-600 text-xs hover:text-white py-1 px-4 border border-gray-600 hover:border-transparent rounded"
+        @click="$router.push(`/posts/${post.id}/edit`)"
+      >
+        <i class="mdi mdi-pencil" />
+        この診断を編集
+      </button>
 
-      <div v-show="!isPlaying">
+      <div v-show="!isPlaying" class="mt-8">
         <button
           class="text-2xl bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded-full mr-1 mb-2"
           @click="handleStartClicked()"
@@ -19,7 +27,7 @@
           ツイート
         </button>
       </div>
-      <PostPlay v-show="isPlaying" :post="post" />
+      <PostPlay v-show="isPlaying" :post="post" class="mt-8" />
     </div>
 
     <ButtonPostCreate class="mt-12" />
