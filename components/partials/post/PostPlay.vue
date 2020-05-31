@@ -23,18 +23,25 @@
         </p>
       </div>
       <button
-        class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto mb-2 mt-8"
+        class="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto mb-4 mt-8"
         @click="handleTweetResultClicked"
       >
         <i class="mdi mdi-twitter mr-1" />
         結果をツイート
       </button>
       <button
+        class="block bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded mx-auto mb-4"
+        @click="handleTweetPostClicked"
+      >
+        <i class="mdi mdi-twitter mr-1" />
+        この診断をシェア
+      </button>
+      <button
         class="block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mx-auto"
         @click="handleResetClicked"
       >
         <i class="mdi mdi-refresh mr-1" />
-        最初から
+        もう一度遊ぶ
       </button>
     </template>
   </div>
@@ -80,6 +87,17 @@ export default Vue.extend({
         '&text=' +
         encodeURIComponent(
           `【結果】\r\n${currentNodeTree.text}\r\n\r\n「${post.title}」で遊びました\r\n#${post.hashtag} #診断チャートメーカー`
+        )
+      window.open(tweet)
+    },
+    handleTweetPostClicked(): void {
+      const post = this.post! as Post
+      const tweet: string =
+        'https://twitter.com/intent/tweet?url=' +
+        encodeURIComponent(`${process.env.BASE_URL}/posts/${post.id}`) +
+        '&text=' +
+        encodeURIComponent(
+          `${post.title}\r\n#${post.hashtag} #診断チャートメーカー`
         )
       window.open(tweet)
     }

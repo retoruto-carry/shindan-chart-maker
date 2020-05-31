@@ -2,13 +2,22 @@
   <div class="text-center">
     <h1 class="text-3xl">{{ post.title }}</h1>
     <p class="text-gray-600 text-sm mt-1 mb-8">作者：{{ user.displayName }}</p>
-    <button
-      v-show="!isPlaying"
-      class="text-2xl bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-1 mb-2"
-      @click="handleStartClicked()"
-    >
-      診断スタート
-    </button>
+
+    <div v-show="!isPlaying">
+      <button
+        class="text-2xl bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-1 mb-2"
+        @click="handleStartClicked()"
+      >
+        診断スタート
+      </button>
+      <button
+        class="block text-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mx-auto mt-8"
+        @click="handleTweetPostClicked()"
+      >
+        <i class="mdi mdi-twitter mr-1" />
+        ツイート
+      </button>
+    </div>
     <PostPlay v-show="isPlaying" :post="post" />
 
     <ButtonPostCreate class="mt-24" />
@@ -97,8 +106,19 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleStartClicked() {
+    handleStartClicked(): void {
       this.isPlaying = true
+    },
+    handleTweetPostClicked(): void {
+      const post = this.post! as Post
+      const tweet: string =
+        'https://twitter.com/intent/tweet?url=' +
+        encodeURIComponent(`${process.env.BASE_URL}/posts/${post.id}`) +
+        '&text=' +
+        encodeURIComponent(
+          `${post.title}\r\n#${post.hashtag} #診断チャートメーカー`
+        )
+      window.open(tweet)
     }
   },
   head() {
