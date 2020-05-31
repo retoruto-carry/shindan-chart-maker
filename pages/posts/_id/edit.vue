@@ -92,7 +92,7 @@ export default Vue.extend({
           tags: this.postFormData.tags.map((tag: TagObj): string => {
             return tag.text
           }),
-          createdAt: this.$firebase.firestore.FieldValue.serverTimestamp()
+          createdAt: (this.post as Post).createdAt
         })
         .then(() => {
           this.$router.push(`/posts/${(this.post as Post).id}`)

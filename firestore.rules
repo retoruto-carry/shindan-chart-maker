@@ -32,6 +32,7 @@ service cloud.firestore {
           && validateString(incomingData().title, 0, 512)
           && validateString(incomingData().subtitle, 0, 512)
           && validateString(incomingData().nodeTree, 0, 16384)
+          && incomingData().createdAt == existingData().createdAt
         allow delete: if request.auth.uid == existingData().userId
         ;
       }
