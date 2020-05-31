@@ -50,3 +50,9 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.z-100 {
+  z-index: 100;
+}
+</style>
