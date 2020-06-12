@@ -27,6 +27,8 @@ import ButtonPostCreate from '~/components/partials/ButtonPostCreate.vue'
 import { Post } from '~/types/struct'
 import { toUser, toPost } from '~/utils/transformer/toObject'
 
+const LIMIT: number = 30
+
 type LocalData = {
   hasNext: boolean
   isProcessing: boolean
@@ -63,6 +65,11 @@ export default Vue.extend({
       hasNext: true,
       isProcessing: false,
       posts: []
+    }
+  },
+  computed: {
+    LIMIT(): number {
+      return LIMIT
     }
   }
 })
