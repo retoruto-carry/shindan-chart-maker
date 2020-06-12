@@ -24,7 +24,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    async signIn() {
+    async signIn(): Promise<void> {
       this.isProcessing = true
       const result = await this.$auth.signInWithPopup(
         new this.$firebase.auth.TwitterAuthProvider()

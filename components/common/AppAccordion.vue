@@ -39,7 +39,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleToggle() {
+    handleToggle(): void {
       this.isOpen = !this.isOpen
     }
   }
