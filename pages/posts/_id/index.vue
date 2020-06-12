@@ -155,7 +155,12 @@ export default Vue.extend({
           hid: 'og:url',
           content: `${process.env.BASE_URL}/posts/${post.id}`
         },
-        { name: 'twitter:title', hid: 'twitter:title', content: title }
+        { name: 'twitter:title', hid: 'twitter:title', content: title },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: `${process.env.OGP_API_URL}?title=${post.title}`
+        }
       ]
     }
   }
