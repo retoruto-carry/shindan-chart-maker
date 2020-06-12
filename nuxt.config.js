@@ -1,5 +1,9 @@
 require('dotenv').config()
 
+const baseName = '診断チャートメーカー'
+const baseDesc = 'フローチャート形式の診断を簡単につくれるサービスです'
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+
 export default {
   mode: 'universal',
   /*
@@ -13,8 +17,17 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: baseDesc
+      },
+      { hid: 'og:site_name', property: 'og:site_name', content: baseName },
+      { hid: 'og:type', property: 'og:type', content: 'article' },
+      { hid: 'og:url', property: 'og:url', content: baseUrl },
+      { hid: 'og:title', property: 'og:title', content: baseName },
+      { hid: 'og:description', property: 'og:description', content: baseDesc },
+      { property: 'article:publisher', content: 'FacebookURL' },
+      { property: 'fb:app_id', content: 'FacebookAppID' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:site', content: '@retoruto_carry' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
