@@ -56,7 +56,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    async handleSubmit() {
+    async handleSubmit(): Promise<void> {
       this.isSubmitting = true
 
       this.postFormData = this.postFormData as PostFormData

@@ -135,13 +135,13 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleSubmit() {
+    handleSubmit(): void {
       this.$emit('submit')
     },
-    handleSetNodeTree(nodeTree: NodeTree) {
+    handleSetNodeTree(nodeTree: NodeTree): void {
       this.postFormData.nodeTree = nodeTree
     },
-    handleResetNodeTree() {
+    handleResetNodeTree(): void {
       this.postFormData.nodeTree = defaultNodeTreeData
     }
   }

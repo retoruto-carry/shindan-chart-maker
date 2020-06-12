@@ -44,7 +44,7 @@ export default Vue.extend({
     signInButtonNav
   },
   methods: {
-    handleLogoClicked() {
+    handleLogoClicked(): void {
       this.$router.push('/')
     }
   }
