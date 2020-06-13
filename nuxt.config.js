@@ -24,6 +24,11 @@ export default {
       { hid: 'og:url', property: 'og:url', content: baseUrl },
       { hid: 'og:title', property: 'og:title', content: baseName },
       { hid: 'og:description', property: 'og:description', content: baseDesc },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: baseUrl + '/images/ogp.png'
+      },
       { property: 'article:publisher', content: 'FacebookURL' },
       { property: 'fb:app_id', content: 'FacebookAppID' },
       { name: 'twitter:card', content: 'summary_large_image' },
