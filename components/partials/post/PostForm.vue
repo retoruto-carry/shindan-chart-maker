@@ -39,7 +39,7 @@
       </p>
     </AppAccordion>
     <div class="w-full overflow-scroll bg-gray-300 p-4">
-      <QuestionNode :node-tree="postFormData.nodeTree" />
+      <NodeTreeEditor :node-tree="postFormData.nodeTree" />
     </div>
     <h2 class="text-xl font-semibold mb-4 mt-8">
       <i class="mdi mdi-pound mr-1" />
@@ -95,7 +95,7 @@ import Vue, { PropType } from 'vue'
 
 import AppAccordion from '~/components/common/AppAccordion.vue'
 import InputTags from '~/components/partials/post/InputTags.vue'
-import QuestionNode from '~/components/partials/QuestionNode.vue'
+import NodeTreeEditor from '~/components/partials/NodeTreeEditor/NodeTreeEditor.vue'
 
 import { NodeTree, NodeTreeSample, PostFormData } from '~/types/struct'
 import { nodeTreeSamples } from '~/utils/constants/nodeTreeSamples'
@@ -103,7 +103,7 @@ import { defaultNodeTreeData } from '~/utils/constants/defalutNodeTreeData'
 
 export default Vue.extend({
   components: {
-    QuestionNode,
+    NodeTreeEditor,
     InputTags,
     AppAccordion
   },

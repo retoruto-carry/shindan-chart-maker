@@ -5,7 +5,7 @@ type ChoiceNode = {
   nodeTree: NodeTree
 }
 
-type QuestionNodeTree = {
+export type QuestionNodeTree = {
   text: string
   type: 'QUESTION'
   choiceNodes: ChoiceNode[]
